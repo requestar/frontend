@@ -1,29 +1,15 @@
-# README #
+# reque.st.ar #
+*The Purpose of this project is to serve as an one stop tool for*
 
-This README would normally document whatever steps are necessary to get your application up and running.
+1. API Creation
+2. API Testing
+	- Response Visualisation
+3. API Mocking
+4. API Documentation
+	- Publishing in Custom Domain
+5. Sync to Private Repo(Self Hosted)
+6. Web and Cross Platform App
+		
+**Version** - 0.0.0
 
-### What is this repository for? ###
-
-* Quick summary
-* Version
-* [Learn Markdown](https://bitbucket.org/tutorials/markdowndemo)
-
-### How do I get set up? ###
-
-* Summary of set up
-* Configuration
-* Dependencies
-* Database configuration
-* How to run tests
-* Deployment instructions
-
-### Contribution guidelines ###
-
-* Writing tests
-* Code review
-* Other guidelines
-
-### Who do I talk to? ###
-
-* Repo owner or admin
-* Other community or team contact
+[# reque.st.ar #](https://elan_chezhian94.bitbucket.io/)
