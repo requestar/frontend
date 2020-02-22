@@ -2,8 +2,11 @@
 *The Purpose of this project is to serve as an one stop tool for*
 
 1. API Creation
+	- SDK in Multiple Languages
 2. API Testing
 	- Response Visualisation
+	- Org, Project, Teams
+	- Folders and Sub Folders
 3. API Mocking
 4. API Documentation
 	- Publishing in Custom Domain
