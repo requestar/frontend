@@ -1,3 +1,3 @@
-import './check-engines'
+require('./check-engines')
 process.env.NODE_ENV = 'development'
-import './index'
+require('./index')
