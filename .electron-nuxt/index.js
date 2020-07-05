@@ -1,21 +1,21 @@
 
-const path = require('path')
-const webpack = require('webpack')
-const electron = require('electron')
+import { join } from 'path'
+import { DefinePlugin } from 'webpack'
+import electron from 'electron'
 
-const { Pipeline, Logger } = require('@xpda-dev/core')
-const { ElectronLauncher } = require('@xpda-dev/electron-launcher')
-const { ElectronBuilder } = require('@xpda-dev/electron-builder')
-const { Webpack } = require('@xpda-dev/webpack-step')
-const resourcesPath = require('./resources-path-provider')
-const { DIST_DIR, MAIN_PROCESS_DIR, SERVER_HOST, SERVER_PORT } = require('./config')
-const NuxtApp = require('./renderer/NuxtApp')
+import { Pipeline, Logger } from '@xpda-dev/core'
+import { ElectronLauncher } from '@xpda-dev/electron-launcher'
+import { ElectronBuilder } from '@xpda-dev/electron-builder'
+import { Webpack } from '@xpda-dev/webpack-step'
+import { mainProcess } from './resources-path-provider'
+import { DIST_DIR, MAIN_PROCESS_DIR, SERVER_HOST, SERVER_PORT } from './config'
+import NuxtApp from './renderer/NuxtApp'
 
 const isDev = process.env.NODE_ENV === 'development'
 
 const launcher = new ElectronLauncher({
   electronPath: electron,
-  entryFile: path.join(DIST_DIR, 'main/index.js')
+  entryFile: join(DIST_DIR, 'main/index.js')
 })
 
 function hasConfigArgument (array) {
@@ -31,15 +31,15 @@ const builder = new ElectronBuilder({
 
 const webpackConfig = Webpack.getBaseConfig({
   entry: isDev
-    ? path.join(MAIN_PROCESS_DIR, 'index.dev.js')
-    : path.join(MAIN_PROCESS_DIR, 'index.js'),
+    ? join(MAIN_PROCESS_DIR, 'index.dev.js')
+    : join(MAIN_PROCESS_DIR, 'index.js'),
   output: {
     filename: 'index.js',
-    path: path.join(DIST_DIR, 'main')
+    path: join(DIST_DIR, 'main')
   },
   plugins: [
-    new webpack.DefinePlugin({
-      INCLUDE_RESOURCES_PATH: resourcesPath.mainProcess(),
+    new DefinePlugin({
+      INCLUDE_RESOURCES_PATH: mainProcess(),
       'process.env.DEV_SERVER_URL': `'${SERVER_HOST}:${SERVER_PORT}'`
     })
   ]
