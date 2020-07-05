@@ -16,3 +16,13 @@
 **Version** - 0.0.0
 
 [# reque.st.ar #](https://elan_chezhian94.bitbucket.io/)
+
+#### Build Setup
+# install dependencies
+yarn install
+
+# serve app with hot reload
+yarn run dev
+
+# build electron application for production
+yarn run build
