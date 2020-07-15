@@ -28,7 +28,8 @@
         </v-hover>
       </v-toolbar>
       <condition condition-type="header" />
-      <condition />
+      <condition condition-type="param" />
+      <condition condition-type="formBody" />
     </v-card>
   </v-container>
 </template>

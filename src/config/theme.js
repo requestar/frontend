@@ -11,7 +11,7 @@ export const Condition = {
     },
     param: {
         color: 'blue',
-        shortText: 'P'
+        shortText: 'p'
     },
     formBody: {
         color: 'green',

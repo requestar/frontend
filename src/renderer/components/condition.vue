@@ -2,7 +2,7 @@
   <v-card class="d-flex flex-row">
     <v-col md="3" class="d-flex flex-row mb-6">
       <v-chip class="headline ma-2 mt-0" :color="condition.color" outlined large>
-        H
+        {{ condition.shortText.toUpperCase() }}
       </v-chip>
       <v-text-field label="Key" :color="condition.color" outlined />
     </v-col>
@@ -50,8 +50,9 @@ export default {
             required: true
         }
     },
-    data: () => {
+    data () {
         const conditionType = this.conditionType
+        console.log(conditionType)
         return {
             conditionChecks,
             condition: Condition[conditionType]
