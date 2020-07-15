@@ -1,0 +1,81 @@
+//{{base_url}}/api/v1/teams/ppgne54e1e98d90cc4c37812ff8bbc4987b87
+{
+    "urls" : {
+        "api": {
+            "v1": {
+                "teams": {
+                    "ppgne54e1e98d90cc4c37812ff8bbc4987b87": {
+                        "id": "121212"
+                    },
+                    "*": {
+                        "id": "121212",
+                        "conditions": [{
+                            "cond1": {
+                                "type": 2,
+                                "key": "uname",
+                                "check": 1,
+                                "values": ["elan"]
+                            },
+                            "cond2": {
+                                "type": 2,
+                                "key": "uname",
+                                "check": 1,
+                                "values": ["elan"]
+                            },
+                            "cond3": {
+                                "type": 2,
+                                "key": "uname",
+                                "check": 1,
+                                "values": ["elan"]
+                            },
+                            "combination": "cond1 && (cond2 || cond3)"
+                        }, {
+                            "cond1": {
+                                "type": 2,
+                                "key": "uname",
+                                "check": 1,
+                                "values": ["elan"]
+                            },
+                            "cond2": {
+                                "type": 2,
+                                "key": "uname",
+                                "check": 1,
+                                "values": ["elan"]
+                            },
+                            "cond3": {
+                                "type": 2,
+                                "key": "uname",
+                                "check": 1,
+                                "values": ["elan"]
+                            },
+                            "combination": "cond1 && (cond2 || cond3)"
+                        }]
+                    }
+                }
+            }
+        }
+    },
+
+    "types" : {
+        "1" : "param",
+        "2" : "header",
+        "3" : "form_data",
+        "4" : "input_stream"
+    },
+
+    "checks" : {
+        "1" : "is_present",
+        "2" : "is_absent",
+        "3" : "==",
+        "4" : "!=",
+        "5" : ">",
+        "6" : ">=",
+        "7" : "<",
+        "8" : "<=",
+        "9" : "regex",
+        "10" : "is_file",
+        "11" : "is_not_file",
+        "12" : "in",
+        "13" : "not in"        
+    }
+}

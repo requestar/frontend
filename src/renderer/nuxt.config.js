@@ -10,8 +10,7 @@ export const head = {
 }
 export const loading = false
 export const plugins = [
-    { ssr: true, src: '@/plugins/icons.js' },
-    { ssr: true, src: '@/plugins/buefy.js' }
+    { ssr: true, src: '@/plugins/icons.js' }
 ]
-export const buildModules = []
+export const buildModules = ['@nuxtjs/vuetify']
 export const modules = []

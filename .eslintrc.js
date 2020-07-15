@@ -13,7 +13,6 @@ module.exports = {
     },
     extends: [
         '@nuxtjs'
-
     ],
     // add your custom rules here
     rules: {

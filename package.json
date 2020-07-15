@@ -30,7 +30,6 @@
     "deepmerge": "4.2.2",
     "@fortawesome/fontawesome-free": "5.13.1",
     "browser-env": "3.3.0",
-    "buefy": "0.8.20",
     "cross-env": "7.0.2",
     "electron": "8.3.0",
     "electron-builder": "22.7.0",
@@ -49,6 +48,7 @@
     "webpack-node-externals": "1.7.2"
   },
   "dependencies": {
+    "@nuxtjs/vuetify": "^1.11.2",
     "dotenv": "^8.2.0",
     "esm": "^3.2.25"
   }
