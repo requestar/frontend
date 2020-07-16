@@ -6,16 +6,22 @@ export class Color {
 
 export const Condition = {
     header: {
+        type: 'header',
         color: 'red',
-        shortText: 'h'
+        shortText: 'h',
+        next: 'param'
     },
     param: {
+        type: 'param',
         color: 'blue',
-        shortText: 'p'
+        shortText: 'p',
+        next: 'formBody'
     },
     formBody: {
+        type: 'formBody',
         color: 'green',
-        shortText: 'fb'
+        shortText: 'fb',
+        next: 'header'
     }
 }
 
