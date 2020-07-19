@@ -19,25 +19,24 @@
   </v-container>
 </template>
 
-<script>
+<script lang="ts">
 import Vuetify from 'vuetify'
+import Vue from 'vue'
 
-export default {
-    vuetify: new Vuetify(),
-    data: () => ({
-        items: [
-            'GET',
-            'POST',
-            'PUT',
-            'PATCH',
-            'DELETE',
-            'HEAD',
-            'OPTIONS',
-            'CUSTOM',
-            'ALL'
-        ]
-    })
-}
+export default Vue.extend({
+	vuetify: new Vuetify(),
+	data: () => ({
+		items: [
+			'GET',
+			'POST',
+			'PUT',
+			'PATCH',
+			'DELETE',
+			'HEAD',
+			'OPTIONS',
+			'CUSTOM',
+			'ALL'
+		]
+	})
+})
 </script>
-
-<style scoped></style>
