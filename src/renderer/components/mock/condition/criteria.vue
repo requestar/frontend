@@ -67,7 +67,6 @@
           </template>
           <span>Delete Condition</span>
         </v-tooltip>
-
         <v-menu offset-y open-on-hover>
           <template v-slot:activator="{ on, attrs }">
             <v-chip
@@ -147,21 +146,7 @@
           <span>Add Condition Group</span>
         </v-tooltip>
 
-        <v-tooltip bottom>
-          <template v-slot:activator="{ on, attrs }">
-            <v-chip
-              class="mr-2"
-              v-bind="attrs"
-              :color="currentCondition.color"
-              outlined
-              v-on="on"
-              @click="openResponseEditor"
-            >
-              <i class="fa fa-code" aria-hidden="true" />
-            </v-chip>
-          </template>
-          <span>Open Response Editor</span>
-        </v-tooltip>
+        <responseEditor :current-condition="currentCondition" />
       </v-row>
     </v-col>
   </v-card>
@@ -177,6 +162,9 @@ import { Condition, conditionChecks } from '../../../mock/condition/check'
 
 export default {
 	vuetify: new Vuetify(),
+	components: {
+		responseEditor: () => import('../response/editor')
+	},
 	props: {
 		criteriaType: {
 			type: String,
