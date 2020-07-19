@@ -53,6 +53,7 @@
   "dependencies": {
     "@nuxtjs/vuetify": "^1.11.2",
     "dotenv": "^8.2.0",
-    "esm": "^3.2.25"
+    "esm": "^3.2.25",
+    "jsonlint": "^1.6.3"
   }
 }

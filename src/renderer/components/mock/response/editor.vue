@@ -18,6 +18,8 @@
           </v-card-title>
           <v-container>
             <v-textarea
+              ref="jsonEditor"
+              v-model="jsonValue"
               auto-grow
               clearable
               no-resize
@@ -27,8 +29,14 @@
               rows="15"
               shaped
               solo
+              dense
+              @keyup="validateJSON($event)"
             />
+            <v-btn v-if="isValidJSON" class="beautify" absolute right @click="beautifyJSON">Beautify</v-btn>
           </v-container>
+          <v-card-text>
+            <pre ref="editorError" />
+          </v-card-text>
           <v-card-actions>
             <v-spacer />
             <v-btn color="blue darken-1" text @click="dialog = false">Close</v-btn>
@@ -42,6 +50,7 @@
 </template>
 
 <script>
+import jsonlint from "jsonlint";
 export default {
 	props: {
 		currentCondition: {
@@ -51,6 +60,46 @@ export default {
 	},
 	data: () => ({
 		dialog: false,
+		isValidJSON: false,
+		jsonValue: ''
 	}),
+	methods: {
+		validateJSON(event){
+			const value = event.target.value;
+			if(value && value.length > 1){
+				try{
+					const result = jsonlint.parse(value);
+					if(result) {
+						this.isValidJSON = true
+						this.$refs.editorError.classList.remove('fail')
+						this.$refs.editorError.textContent = ''
+					}
+				}
+				catch(e){
+					this.$refs.editorError.classList.add('fail')
+					this.$refs.editorError.textContent = e.message
+					this.isValidJSON = false
+				}
+			}
+			else {
+				this.$refs.editorError.classList.remove('fail')
+				this.$refs.editorError.textContent = ''
+				this.isValidJSON = false
+			}
+		},
+		beautifyJSON(){
+			const result = JSON.parse(this.jsonValue)
+			this.jsonValue = JSON.stringify(result, null, '\t')
+			this.isValidJSON = false
+		}
+	}
 }
 </script>
+<style scoped>
+.fail {
+	padding: 1em;
+        background-color: #fee;
+        color: #933;
+        border: 2px solid #933;
+      }
+</style>
