@@ -48,116 +48,121 @@
       />
     </v-col>
     <v-col md="2" class="d-flex flex-row">
-      <v-tooltip bottom>
-        <template v-slot:activator="{ on, attrs }">
-          <v-chip
-            v-if="!isFirst"
-            class="mr-2"
-            v-bind="attrs"
-            :color="currentCondition.color"
-            outlined
-            v-on="on"
-            @click="deleteCriteria"
-          >
-            <v-icon size="medium">mdi-minus</v-icon>
-          </v-chip>
-        </template>
-        <span>Delete Condition</span>
-      </v-tooltip>
+      <v-row
+        align="center"
+      >
+        <v-tooltip bottom>
+          <template v-slot:activator="{ on, attrs }">
+            <v-chip
+              v-if="!isFirst"
+              class="mr-2"
+              v-bind="attrs"
+              :color="currentCondition.color"
+              outlined
+              v-on="on"
+              @click="deleteCriteria"
+            >
+              <v-icon size="medium">mdi-minus</v-icon>
+            </v-chip>
+          </template>
+          <span>Delete Condition</span>
+        </v-tooltip>
 
-      <v-menu offset-y open-on-hover>
-        <template v-slot:activator="{ on, attrs }">
-          <v-chip
-            class="mr-2"
-            v-bind="attrs"
-            :color="currentCondition.color"
-            outlined
-            v-on="on"
-          >
-            <v-icon size="medium">mdi-plus</v-icon>
-          </v-chip>
-        </template>
-        <v-list>
-          <v-list-item>
-            <v-hover v-slot:default="{ hover }" open-delay="200">
-              <v-btn
-                elevation="2"
-                color="red"
-                :dark="hover ? true : false"
-                :outlined="hover ? false : true"
-                raised
-                class="mr-10"
-                @click="addCriteria('header')"
-              >
-                <v-icon size="large">mdi-plus</v-icon>
-                Header(H)
-              </v-btn>
-            </v-hover>
-          </v-list-item>
-          <v-list-item>
-            <v-hover v-slot:default="{ hover }" open-delay="200">
-              <v-btn
-                elevation="2"
-                color="blue"
-                :dark="hover ? true : false"
-                :outlined="hover ? false : true"
-                raised
-                class="mr-10"
-                @click="addCriteria('param')"
-              >
-                <v-icon size="large">mdi-plus</v-icon>
-                Param(P)
-              </v-btn>
-            </v-hover>
-          </v-list-item>
-          <v-list-item>
-            <v-hover v-slot:default="{ hover }" open-delay="200">
-              <v-btn
-                elevation="2"
-                color="green"
-                :dark="hover ? true : false"
-                :outlined="hover ? false : true"
-                raised
-                @click="addCriteria('formBody')"
-              >
-                <v-icon size="large">mdi-plus</v-icon>
-                Form Body(FB)
-              </v-btn>
-            </v-hover>
-          </v-list-item>
-        </v-list>
-      </v-menu>
+        <v-menu offset-y open-on-hover>
+          <template v-slot:activator="{ on, attrs }">
+            <v-chip
+              class="mr-2"
+              v-bind="attrs"
+              :color="currentCondition.color"
+              outlined
+              v-on="on"
+            >
+              <v-icon size="medium">mdi-plus</v-icon>
+            </v-chip>
+          </template>
+          <v-list>
+            <v-list-item>
+              <v-hover v-slot:default="{ hover }" open-delay="200">
+                <v-btn
+                  elevation="2"
+                  color="red"
+                  :dark="hover ? true : false"
+                  :outlined="hover ? false : true"
+                  raised
+                  class="mr-10"
+                  @click="addCriteria('header')"
+                >
+                  <v-icon size="large">mdi-plus</v-icon>
+                  Header(H)
+                </v-btn>
+              </v-hover>
+            </v-list-item>
+            <v-list-item>
+              <v-hover v-slot:default="{ hover }" open-delay="200">
+                <v-btn
+                  elevation="2"
+                  color="blue"
+                  :dark="hover ? true : false"
+                  :outlined="hover ? false : true"
+                  raised
+                  class="mr-10"
+                  @click="addCriteria('param')"
+                >
+                  <v-icon size="large">mdi-plus</v-icon>
+                  Param(P)
+                </v-btn>
+              </v-hover>
+            </v-list-item>
+            <v-list-item>
+              <v-hover v-slot:default="{ hover }" open-delay="200">
+                <v-btn
+                  elevation="2"
+                  color="green"
+                  :dark="hover ? true : false"
+                  :outlined="hover ? false : true"
+                  raised
+                  @click="addCriteria('formBody')"
+                >
+                  <v-icon size="large">mdi-plus</v-icon>
+                  Form Body(FB)
+                </v-btn>
+              </v-hover>
+            </v-list-item>
+          </v-list>
+        </v-menu>
 
-      <v-tooltip bottom>
-        <template v-if="criteriaLevel < 3" v-slot:activator="{ on, attrs }">
-          <v-chip
-            class="mr-2"
-            v-bind="attrs"
-            :color="currentCondition.color"
-            outlined
-            v-on="on"
-            @click="addCriteriaGroup"
-          >
-            <i class="fa fa-object-group" aria-hidden="true" />
-          </v-chip>
-        </template>
-        <span>Add Condition Group</span>
-      </v-tooltip>
+        <v-tooltip bottom>
+          <template v-if="criteriaLevel < 3" v-slot:activator="{ on, attrs }">
+            <v-chip
+              class="mr-2"
+              v-bind="attrs"
+              :color="currentCondition.color"
+              outlined
+              v-on="on"
+              @click="addCriteriaGroup"
+            >
+              <i class="fa fa-object-group" aria-hidden="true" />
+            </v-chip>
+          </template>
+          <span>Add Condition Group</span>
+        </v-tooltip>
 
-      <v-tooltip bottom>
-        <template v-slot:activator="{ on, attrs }">
-          <v-chip
-            class="mr-2"
-            v-bind="attrs"
-            :color="currentCondition.color"
-            outlined
-            v-on="on"
-          >
-            <i class="fa fa-code" aria-hidden="true" />
-          </v-chip>
-        </template>
-        <span>Open Response Editor</span>
-      </v-tooltip>
+        <v-tooltip bottom>
+          <template v-slot:activator="{ on, attrs }">
+            <v-chip
+              class="mr-2"
+              v-bind="attrs"
+              :color="currentCondition.color"
+              outlined
+              v-on="on"
+              @click="openResponseEditor"
+            >
+              <i class="fa fa-code" aria-hidden="true" />
+            </v-chip>
+          </template>
+          <span>Open Response Editor</span>
+        </v-tooltip>
+      </v-row>
     </v-col>
   </v-card>
 </template>
@@ -226,6 +231,10 @@ export default {
 			})
 			instance.$mount()
 			this.$el.parentNode.insertBefore(instance.$el, this.$el.nextSibling);
+		},
+
+		openResponseEditor(){
+			
 		}
 	},
 }

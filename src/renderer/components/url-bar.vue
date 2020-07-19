@@ -13,7 +13,7 @@
         <v-text-field label="URL" outlined />
       </v-col>
       <v-col md="2">
-        <v-btn outlined x-large color="primary">Send</v-btn>
+        <v-btn outlined x-large color="primary">Save</v-btn>
       </v-col>
     </v-row>
   </v-container>
