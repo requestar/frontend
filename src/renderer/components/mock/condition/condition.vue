@@ -38,7 +38,8 @@ export default {
 		const instance = new ComponentClass({
 			propsData: {
 				criteriaType : 'param',
-				isFirst: true
+				isFirst: true,
+				criteriaLevel: 1
 			}
 		})
 		instance.$mount()

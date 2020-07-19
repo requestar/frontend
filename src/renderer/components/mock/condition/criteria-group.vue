@@ -22,12 +22,19 @@ import Vue from 'vue'
 import criteria from '../condition/criteria';
 
 export default {
+	props: {
+		criteriaLevel: {
+			type: Number,
+			required: true
+		}
+	},
 	mounted(){
 		const ComponentClass = Vue.extend(criteria)
 		const instance = new ComponentClass({
 			propsData: {
 				criteriaType : 'param',
-				isFirst: true
+				isFirst: true,
+				criteriaLevel: this.criteriaLevel
 			}
 		})
 		instance.$mount()

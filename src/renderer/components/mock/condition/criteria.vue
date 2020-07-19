@@ -129,7 +129,7 @@
       </v-menu>
 
       <v-tooltip bottom>
-        <template v-slot:activator="{ on, attrs }">
+        <template v-if="criteriaLevel < 3" v-slot:activator="{ on, attrs }">
           <v-chip
             class="mr-2"
             v-bind="attrs"
@@ -182,6 +182,10 @@ export default {
 			type: Boolean,
 			default: false,
 		},
+		criteriaLevel: {
+			type: Number,
+			required: true
+		}
 	},
 	data() {
 		return {
@@ -199,7 +203,8 @@ export default {
 			const ComponentClass = Vue.extend(criteria)
 			const instance = new ComponentClass({
 				propsData: {
-					criteriaType
+					criteriaType,
+					criteriaLevel : this.criteriaLevel
 				}
 			})
 			instance.$mount()
@@ -213,7 +218,12 @@ export default {
 
 		addCriteriaGroup(){
 			const ComponentClass = Vue.extend(criteriaGroup)
-			const instance = new ComponentClass()
+			console.log(this.criteriaLevel)
+			const instance = new ComponentClass({
+				propsData: {
+					criteriaLevel : this.criteriaLevel + 1
+				}
+			})
 			instance.$mount()
 			this.$el.parentNode.insertBefore(instance.$el, this.$el.nextSibling);
 		}
