@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <v-container fluid style="width:90%">
     <v-card
       class="mx-auto"
       shaped

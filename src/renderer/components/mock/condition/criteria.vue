@@ -3,6 +3,7 @@
     :key="currentCondition.type"
     class="d-flex flex-row"
     style="max-height:5em"
+    shaped
   >
     <v-col md="3" class="d-flex flex-row mb-6">
       <v-chip
@@ -11,8 +12,9 @@
         :color="currentCondition.color"
         outlined
         large
+        @click="isAND = !isAND"
       >
-        &&
+        {{ isAND ? '&&' : '||' }}
       </v-chip>
       <v-chip
         class="headline ma-2 mt-0"
@@ -153,12 +155,10 @@
 </template>
 
 <script>
-import Vue from 'vue'
 import Vuetify from 'vuetify'
-import criteria from '../condition/criteria';
-import criteriaGroup from '../condition/criteria-group';
 
 import { Condition, conditionChecks } from '../../../mock/condition/check'
+import {addCriteria, deleteCriteria, addCriteriaGroup, convertOperator} from "./criteria-action"
 
 export default {
 	vuetify: new Vuetify(),
@@ -185,45 +185,15 @@ export default {
 			conditionChecks,
 			currentCondition: Condition[this.criteriaType],
 			conditions: Condition,
+			isAND: true
 		}
 	},
 	methods: {
 		convertCondition(criteriaType) {
 			this.currentCondition = Condition[Condition[criteriaType].next]
 		},
-		
-		addCriteria(criteriaType){
-			const ComponentClass = Vue.extend(criteria)
-			const instance = new ComponentClass({
-				propsData: {
-					criteriaType,
-					criteriaLevel : this.criteriaLevel
-				}
-			})
-			instance.$mount()
-			this.$el.parentNode.insertBefore(instance.$el, this.$el.nextSibling);
-		},
-
-		deleteCriteria(){
-			this.$destroy();
-			this.$el.parentNode.removeChild(this.$el);
-		},
-
-		addCriteriaGroup(){
-			const ComponentClass = Vue.extend(criteriaGroup)
-			console.log(this.criteriaLevel)
-			const instance = new ComponentClass({
-				propsData: {
-					criteriaLevel : this.criteriaLevel + 1
-				}
-			})
-			instance.$mount()
-			this.$el.parentNode.insertBefore(instance.$el, this.$el.nextSibling);
-		},
-
-		openResponseEditor(){
-			
-		}
+    
+		addCriteria, deleteCriteria, addCriteriaGroup
 	},
 }
 </script>
