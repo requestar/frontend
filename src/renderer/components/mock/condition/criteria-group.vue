@@ -1,20 +1,21 @@
 <template>
   <v-container fluid class="d-flex flex-row">
     <v-chip
+      v-if="!isFirst"
       class="headline ma-2 mt-0"
       color="blue"
       outlined
       large
-      @click="isAND = !isAND"
+      @click="isAnd = !isAnd"
     >
-      {{ isAND ? '&&' : '||' }}
+      {{ isAnd ? '&&' : '||' }}
     </v-chip>
 
     <v-hover>
       <template v-slot:default="{ hover }">
         <v-card
           class="px-3 py-3"
-          style="width:100%;"
+          style="width:100%; border: black solid 1px;"
           shaped
         >
           <v-layout
@@ -79,20 +80,37 @@ import Vue from 'vue'
 import Vuetify from 'vuetify'
 
 import criteria from '../condition/criteria';
+import criteriaGroup from '../condition/criteria-group';
 
-import { addCriteria, deleteCriteria, addCriteriaGroup, convertOperator } from "./criteria-action"
+import { organisePattern } from '../../../mock/condition/check'
+import { addCriteria, deleteCriteria, addCriteriaGroup } from "./criteria-action"
 
 export default {
 	vuetify: new Vuetify(),
 	props: {
+		conditionId: {
+			type: Number,
+			required: true
+		},
+		criteria: {
+			type: Array,
+			required: true,
+		},
+		pattern: {
+			type: String,
+			required: true,
+		},
+		isAnd: {
+			type: Boolean,
+			required: true,
+		},
+		isFirst: {
+			type: Boolean,
+			required: true,
+		},
 		criteriaLevel: {
 			type: Number,
 			required: true
-		}
-	},
-	data() {
-		return {
-			isAND: true
 		}
 	},
 	created(){
@@ -101,7 +119,43 @@ export default {
 		this.addCriteriaGroup = addCriteriaGroup.bind(this)
 	},
 	mounted(){
-		const ComponentClass = Vue.extend(criteria)
+		const patternArray = organisePattern(this.pattern);
+		console.log(patternArray)
+		patternArray.forEach(pattern => {
+			if(pattern.type === "criteria"){
+				const ComponentClass = Vue.extend(criteria)
+				const criterium = this.criteria[+pattern.value - 1];
+				const instance = new ComponentClass({
+					store: this.$store,
+					propsData: {
+						conditionId: this.conditionId,
+						criterium,
+						isAnd: pattern.isAnd,
+						isFirst: pattern.isFirst,
+						criteriaLevel: this.criteriaLevel
+					}
+				})
+				instance.$mount()
+				this.$refs.criteria.appendChild(instance.$el)
+			}
+			else{
+				const ComponentClass = Vue.extend(criteriaGroup)
+				const instance = new ComponentClass({
+					store: this.$store,
+					propsData: {
+						conditionId: this.conditionId,
+						criteria: this.criteria,
+						pattern: pattern.value,
+						isAnd: pattern.isAnd,
+						isFirst: pattern.isFirst,
+						criteriaLevel: this.criteriaLevel + 1
+					}
+				})
+				instance.$mount()
+				this.$refs.criteria.appendChild(instance.$el)
+			}
+		})
+		/* const ComponentClass = Vue.extend(criteria)
 		const instance = new ComponentClass({
 			propsData: {
 				criteriaType : 'param',
@@ -110,7 +164,7 @@ export default {
 			}
 		})
 		instance.$mount()
-		this.$refs.criteria.appendChild(instance.$el)
+		this.$refs.criteria.appendChild(instance.$el) */
 	},
 	methods: {
 		// addCriteria, deleteCriteria, addCriteriaGroup, convertOperator - this is not working

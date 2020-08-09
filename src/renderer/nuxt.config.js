@@ -6,11 +6,12 @@
 
 export const mode = 'spa'
 export const head = {
-    title: 'frontend'
+	title: 'frontend'
 }
 export const loading = false
 export const plugins = [
-    { ssr: true, src: '@/plugins/icons.js' }
+	{ ssr: true, src: '@/plugins/icons.js' }
 ]
 export const buildModules = ['@nuxtjs/vuetify']
 export const modules = []
+export const devtools = true;

@@ -1,51 +1,54 @@
 <template>
   <v-card
-    :key="currentCondition.type"
+    :key="currentCriteria.type"
     class="d-flex flex-row"
-    style="max-height:5em"
+    style="max-height:5em; border: black solid 1px;"
     shaped
   >
     <v-col md="3" class="d-flex flex-row mb-6">
       <v-chip
         v-if="!isFirst"
         class="headline ma-2 mt-0"
-        :color="currentCondition.color"
+        :color="currentCriteria.color"
         outlined
         large
-        @click="isAND = !isAND"
+        @click="isAnd = !isAnd"
       >
-        {{ isAND ? '&&' : '||' }}
+        {{ isAnd ? '&&' : '||' }}
       </v-chip>
       <v-chip
         class="headline ma-2 mt-0"
-        :color="currentCondition.color"
+        :color="currentCriteria.color"
         outlined
         large
-        @click="convertCondition(currentCondition.type)"
+        @click="convertCondition(currentCriteria.type)"
       >
-        {{ currentCondition.shortText.toUpperCase() }}
+        {{ currentCriteria.shortText.toUpperCase() }}
       </v-chip>
       <v-text-field
+        v-model="currentCriteria.key"
         label="Key"
-        :color="currentCondition.color"
+        :color="currentCriteria.color"
         outlined
       />
     </v-col>
     <v-col md="2">
       <v-select
+        v-model="currentCriteria.check"
         :items="conditionChecks"
         full-width
         label="Check"
         item-text="text"
         item-value="value"
         outlined
-        :color="currentCondition.color"
+        :color="currentCriteria.color"
       />
     </v-col>
     <v-col md="5">
       <v-text-field
+        v-model="currentCriteria.value"
         label="Value"
-        :color="currentCondition.color"
+        :color="currentCriteria.color"
         outlined
       />
     </v-col>
@@ -59,7 +62,7 @@
               v-if="!isFirst"
               class="mr-2"
               v-bind="attrs"
-              :color="currentCondition.color"
+              :color="currentCriteria.color"
               outlined
               v-on="on"
               @click="deleteCriteria"
@@ -74,7 +77,7 @@
             <v-chip
               class="mr-2"
               v-bind="attrs"
-              :color="currentCondition.color"
+              :color="currentCriteria.color"
               outlined
               v-on="on"
             >
@@ -137,7 +140,7 @@
             <v-chip
               class="mr-2"
               v-bind="attrs"
-              :color="currentCondition.color"
+              :color="currentCriteria.color"
               outlined
               v-on="on"
               @click="addCriteriaGroup"
@@ -148,7 +151,7 @@
           <span>Add Condition Group</span>
         </v-tooltip>
 
-        <responseEditor :current-condition="currentCondition" />
+        <responseEditor :response="response" :color="currentCriteria.color" @printResponse="printResponse(currentCriteria.response)" />
       </v-row>
     </v-col>
   </v-card>
@@ -156,9 +159,12 @@
 
 <script>
 import Vuetify from 'vuetify'
+import Vue from 'vue'
+import { mapMutations } from "vuex";
 
-import { Condition, conditionChecks } from '../../../mock/condition/check'
-import {addCriteria, deleteCriteria, addCriteriaGroup, convertOperator} from "./criteria-action"
+import { defaultCriteriaConfig, conditionChecks } from '../../../mock/condition/check'
+import {addCriteria, deleteCriteria, addCriteriaGroup} from "./criteria-action"
+Vue.config.devtools = true;
 
 export default {
 	vuetify: new Vuetify(),
@@ -166,14 +172,21 @@ export default {
 		responseEditor: () => import('../response/editor')
 	},
 	props: {
-		criteriaType: {
-			type: String,
-			default: 'param',
+		conditionId: {
+			type: Number,
+			required: true
+		},
+		criterium: {
+			type: Object,
+			required: true,
+		},
+		isAnd: {
+			type: Boolean,
 			required: true,
 		},
 		isFirst: {
 			type: Boolean,
-			default: false,
+			required: true,
 		},
 		criteriaLevel: {
 			type: Number,
@@ -183,17 +196,38 @@ export default {
 	data() {
 		return {
 			conditionChecks,
-			currentCondition: Condition[this.criteriaType],
-			conditions: Condition,
-			isAND: true
+			currentCriteria: {... this.criterium, ...defaultCriteriaConfig[this.criterium.type]}
+		}
+	},
+	computed: {
+		response (){
+			const conditions = this.$store.state.mock.conditions
+			const index = conditions.findIndex(condition => this.conditionId === condition.id)
+			const response = conditions[index].response
+			return response[this.criterium.id]
 		}
 	},
 	methods: {
-		convertCondition(criteriaType) {
-			this.currentCondition = Condition[Condition[criteriaType].next]
+		convertCondition() {
+			const nextCriteriaType = this.currentCriteria.next
+			this.currentCriteria = {...this.currentCriteria, 
+				...defaultCriteriaConfig[nextCriteriaType], 
+				...{'type': nextCriteriaType}
+			}
 		},
     
-		addCriteria, deleteCriteria, addCriteriaGroup
+		addCriteria, deleteCriteria, addCriteriaGroup,
+    
+		printResponse(e){
+			console.log(this.currentCriteria.response);
+		},
+    
+		saveThis(){
+			this.$emit('saveThis', this.currentCriteria)
+		},
+		...mapMutations({
+			toggle: 'mock/add'
+		})
 	},
 }
 </script>

@@ -23,3 +23,16 @@ export class Condition {
 }
 
 export const conditions = []
+
+export const emptyCondition = {
+	name: 'new condition',// i18n
+	id: new Date().getTime(),
+	criteria: [{
+		"id": new Date().getTime() + 1,
+		"type": "header",
+		"key": "",
+		"check": "1",
+		"value": ""
+	}],
+	pattern: "0"
+}

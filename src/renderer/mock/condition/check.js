@@ -4,21 +4,18 @@ export class Color {
     formBody = 'green'
 }
 
-export const Condition = {
+export const defaultCriteriaConfig = {
 	header: {
-		type: 'header',
 		color: 'red',
 		shortText: 'h',
 		next: 'param'
 	},
 	param: {
-		type: 'param',
 		color: 'blue',
 		shortText: 'p',
 		next: 'formBody'
 	},
 	formBody: {
-		type: 'formBody',
 		color: 'green',
 		shortText: 'fb',
 		next: 'header'
@@ -40,3 +37,40 @@ export const conditionChecks = [
 	{ value: '12', text: 'in' },
 	{ value: '13', text: 'not in' }
 ]
+
+export function organisePattern(pattern){
+	const array = [];
+	const patternRegex = /(\d+|\s*[&|]\s*\d+|\s*[&|]\s*\(\s*\d+|\))\s*/g;	
+	let bracketCount = 0;
+	let currentString = '';
+
+	pattern.match(patternRegex).forEach(function (currentToken) {
+		currentString += currentToken;
+		let type = 'criteria';
+		if (currentToken.includes('(')) {
+			bracketCount++;
+			return;
+		}
+		else if (currentToken.includes(')')) {
+			bracketCount--;
+			type = 'criteriaGroup';
+		}
+		if (bracketCount === 0) {
+			array.push(createCriteria(type, currentString));
+			currentString = '';
+		}
+	});
+	return array;
+
+	function createCriteria(type, currentPattern) {
+		const firstChar = currentPattern.charAt(0);
+		const isFirstCharOperator = firstChar === '&' || firstChar === '|';
+		currentPattern = isFirstCharOperator ? currentPattern.slice(1) : currentPattern;
+		return {
+			type,
+			value: currentPattern,
+			isAnd: firstChar === '&',
+			isFirst: !isFirstCharOperator
+		}
+	}
+}

@@ -5,7 +5,7 @@
         <template v-slot:activator="{ on : dialog }">
           <v-chip
             class="mr-2"
-            :color="currentCondition.color"
+            :color="color"
             outlined
             v-on="{ ...tooltip, ...dialog }"
           >
@@ -19,7 +19,7 @@
           <v-container>
             <v-textarea
               ref="jsonEditor"
-              v-model="jsonValue"
+              v-model="responseText"
               auto-grow
               clearable
               no-resize
@@ -40,7 +40,7 @@
           <v-card-actions>
             <v-spacer />
             <v-btn color="blue darken-1" text @click="dialog = false">Close</v-btn>
-            <v-btn color="blue darken-1" text @click="dialog = false">Save</v-btn>
+            <v-btn color="blue darken-1" text @click="saveResponse();dialog = false">Save</v-btn>
           </v-card-actions>
         </v-card>
       </v-dialog>
@@ -51,18 +51,30 @@
 
 <script>
 import jsonlint from "jsonlint";
+
+let responseText = "";
+
 export default {
 	props: {
-		currentCondition: {
+		response: {
 			type: Object,
+			required: true
+		},
+		color: {
+			type: String,
 			required: true
 		}
 	},
-	data: () => ({
-		dialog: false,
-		isValidJSON: false,
-		jsonValue: ''
-	}),
+	data() {
+		return {
+			dialog: false,
+			isValidJSON: false,
+			responseText: this.response.value
+		}
+	},
+	created() {
+		responseText = this.response && this.response.text || responseText;
+	},
 	methods: {
 		validateJSON(event){
 			const value = event.target.value;
@@ -88,9 +100,12 @@ export default {
 			}
 		},
 		beautifyJSON(){
-			const result = JSON.parse(this.jsonValue)
-			this.jsonValue = JSON.stringify(result, null, '\t')
+			const result = JSON.parse(this.responseText)
+			this.responseText = JSON.stringify(result, null, '\t')
 			this.isValidJSON = false
+		},
+		saveResponse(){
+			this.$emit('printResponse', this.responseText)
 		}
 	}
 }

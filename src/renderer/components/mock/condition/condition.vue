@@ -37,16 +37,75 @@
 <script>
 import Vue from 'vue'
 import criteria from '../condition/criteria';
+import criteriaGroup from '../condition/criteria-group';
+import { organisePattern } from '../../../mock/condition/check'
 
 export default {
+	components: {
+		criteria
+	},
 	props: {
-		condition: {
+		currentCondition: {
 			type: Object,
 			required: true
 		}
 	},
+	data() {
+		return {
+			condition: this.currentCondition
+		}
+	},
+	beforeMount(){
+		const criteria = this.condition.criteria
+		if(!criteria || criteria.length === 0){
+			const criterium = {
+				"type": "header",
+				"key": "",
+				"check": "",
+				"value": ""
+			}
+			this.condition.criteria = [criterium]
+			// this.$store.commit('mock/pushCriteria', {id: "", criteria});
+		}
+		this.patternArray = organisePattern(this.condition.pattern);
+	},
 	mounted(){
-		const ComponentClass = Vue.extend(criteria)
+		const criteriaLevel = 1;
+		this.patternArray.forEach(pattern => {
+			if(pattern.type === "criteria"){
+				const ComponentClass = Vue.extend(criteria)
+				const criterium = this.condition.criteria[+pattern.value - 1];
+				const instance = new ComponentClass({
+					store: this.$store,
+					propsData: {
+						conditionId: this.condition.id,
+						criterium,
+						isAnd: pattern.isAnd,
+						isFirst: pattern.isFirst,
+						criteriaLevel
+					}
+				})
+				instance.$mount()
+				this.$refs.criteria.appendChild(instance.$el)
+			}
+			else{
+				const ComponentClass = Vue.extend(criteriaGroup)
+				const instance = new ComponentClass({
+					store: this.$store,
+					propsData: {
+						conditionId: this.condition.id,
+						criteria: this.condition.criteria,
+						pattern: pattern.value,
+						isAnd: pattern.isAnd,
+						isFirst: pattern.isFirst,
+						criteriaLevel
+					}
+				})
+				instance.$mount()
+				this.$refs.criteria.appendChild(instance.$el)
+			}
+		})
+		/* const ComponentClass = Vue.extend(criteria)
 		const instance = new ComponentClass({
 			propsData: {
 				criteriaType : 'param',
@@ -55,7 +114,7 @@ export default {
 			}
 		})
 		instance.$mount()
-		this.$refs.criteria.appendChild(instance.$el)
+		this.$refs.criteria.appendChild(instance.$el) */
 	},
 	methods: {
 		deleteCondition(){

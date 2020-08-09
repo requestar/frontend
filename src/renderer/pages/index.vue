@@ -3,12 +3,14 @@
     <v-main>
       <div ref="main" />
       <urlBar />
-      <conditionSet conditions="conditions" />
+      <conditionSet />
     </v-main>
   </v-app>
 </template>
 <script>
+import Vue from 'vue';
 import { conditions } from '../mock/condition/condition'
+Vue.config.devtools = true;
 
 export default {
 	components: {

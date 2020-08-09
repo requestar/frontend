@@ -29,51 +29,45 @@
           <span>Add Condition</span>
         </v-tooltip>
       </v-toolbar>
-      <div ref="condition-set" />
+      <div class="condition-set">
+        <condition v-for="condition in conditionSet" :key="condition.id" :current-condition="condition" />
+      </div>
     </v-card>
     <v-container />
   </v-container>
 </template>
 
 <script>
-import Vue from 'vue'
+import { mapMutations } from "vuex";
+
 import condition from '../condition/condition';
-import { conditionChecks } from '../../../mock/condition/check'
 
 export default {
 	components: {
+		condition
 	},
-	props: ['conditions'],
-	data: () => {
-		return {
-			conditionChecks
+	computed: {
+		conditionSet () {
+			return this.$store.state.mock.conditions
 		}
 	},
-	mounted() {
-		const ComponentClass = Vue.extend(condition)
-		const instance = new ComponentClass({
-			propsData: {
-				condition : {
-					name: 'new'
-				}
-			}
-		})
-		instance.$mount()
-		this.$refs['condition-set'].appendChild(instance.$el)
+	beforeMount() {
+		if(!this.conditionSet || this.conditionSet.length === 0){
+			this.$store.commit('mock/createCondition');
+		}
 	},
 	methods: {
 		addCondition(){
-			const ComponentClass = Vue.extend(condition)
-			const instance = new ComponentClass({
-				propsData: {
-					condition : {
-						name: 'new'
-					}
-				}
-			})
-			instance.$mount()
-			this.$refs['condition-set'].appendChild(instance.$el)
-		}
+			const newCondition = {
+				name: 'new',
+				id: new Date().getTime()
+			};
+			this.conditionArray.push(newCondition);
+			this.$store.commit('mock/pushCondition', newCondition);
+		},
+		...mapMutations({
+			toggle: 'mock/add'
+		})
 	}
 }
 </script>
