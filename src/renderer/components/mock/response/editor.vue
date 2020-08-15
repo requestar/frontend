@@ -58,7 +58,13 @@ export default {
 	props: {
 		response: {
 			type: Object,
-			required: true
+			required: false,
+			default() {
+				return {
+					status: 200,
+					value: ''
+				}
+			}
 		},
 		color: {
 			type: String,

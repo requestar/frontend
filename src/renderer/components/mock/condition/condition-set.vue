@@ -58,12 +58,7 @@ export default {
 	},
 	methods: {
 		addCondition(){
-			const newCondition = {
-				name: 'new',
-				id: new Date().getTime()
-			};
-			this.conditionArray.push(newCondition);
-			this.$store.commit('mock/pushCondition', newCondition);
+			this.$store.commit('mock/createCondition');
 		},
 		...mapMutations({
 			toggle: 'mock/add'

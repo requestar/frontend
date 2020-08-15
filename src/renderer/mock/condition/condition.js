@@ -34,5 +34,5 @@ export const emptyCondition = {
 		"check": "1",
 		"value": ""
 	}],
-	pattern: "0"
+	pattern: "1"
 }

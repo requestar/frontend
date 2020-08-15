@@ -94,7 +94,7 @@
                   :outlined="hover ? false : true"
                   raised
                   class="mr-10"
-                  @click="addCriteria('header')"
+                  @click="addCriteria(conditionId, 'header', criteriaLevel)"
                 >
                   <v-icon size="large">mdi-plus</v-icon>
                   Header(H)
@@ -110,7 +110,7 @@
                   :outlined="hover ? false : true"
                   raised
                   class="mr-10"
-                  @click="addCriteria('param')"
+                  @click="addCriteria(conditionId, 'param', criteriaLevel)"
                 >
                   <v-icon size="large">mdi-plus</v-icon>
                   Param(P)
@@ -125,7 +125,7 @@
                   :dark="hover ? true : false"
                   :outlined="hover ? false : true"
                   raised
-                  @click="addCriteria('formBody')"
+                  @click="addCriteria(conditionId, 'formBody', criteriaLevel)"
                 >
                   <v-icon size="large">mdi-plus</v-icon>
                   Form Body(FB)
@@ -204,7 +204,7 @@ export default {
 			const conditions = this.$store.state.mock.conditions
 			const index = conditions.findIndex(condition => this.conditionId === condition.id)
 			const response = conditions[index].response
-			return response[this.criterium.id]
+			return response && response[this.criterium.id]
 		}
 	},
 	methods: {
