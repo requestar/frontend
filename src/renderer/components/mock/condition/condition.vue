@@ -21,7 +21,7 @@
                 raised
                 v-bind="attrs"
                 v-on="on"
-                @click="deleteCondition"
+                @click="deleteCondition(condition.id)"
               >
                 <v-icon size="large">mdi-delete</v-icon>
               </v-btn>
@@ -41,9 +41,6 @@ import criteriaGroup from '../condition/criteria-group';
 import { organisePattern } from '../../../mock/condition/check'
 
 export default {
-	components: {
-		criteria
-	},
 	props: {
 		currentCondition: {
 			type: Object,
@@ -58,14 +55,7 @@ export default {
 	beforeMount(){
 		const criteria = this.condition.criteria
 		if(!criteria || criteria.length === 0){
-			const criterium = {
-				"type": "header",
-				"key": "",
-				"check": "",
-				"value": ""
-			}
-			this.condition.criteria = [criterium]
-			// this.$store.commit('mock/pushCriteria', {id: "", criteria});
+			this.$store.dispatch('mock/addDefaultCriterium', {conditionId: this.condition.id});
 		}
 		this.patternArray = organisePattern(this.condition.pattern);
 	},
@@ -117,12 +107,13 @@ export default {
 		this.$refs.criteria.appendChild(instance.$el) */
 	},
 	methods: {
-		deleteCondition(){
+		deleteCondition(conditionId){
 			// destroy the vue listeners, etc
 			this.$destroy();
 
 			// remove the element from the DOM
 			this.$el.parentNode.removeChild(this.$el);
+			this.$store.dispatch('mock/deleteCondition', conditionId)
 		}
 	}
 }

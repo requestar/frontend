@@ -38,8 +38,6 @@
 </template>
 
 <script>
-import { mapMutations } from "vuex";
-
 import condition from '../condition/condition';
 
 export default {
@@ -48,21 +46,18 @@ export default {
 	},
 	computed: {
 		conditionSet () {
-			return this.$store.state.mock.conditions
+			return this.$store.getters['mock/conditions']
 		}
 	},
 	beforeMount() {
 		if(!this.conditionSet || this.conditionSet.length === 0){
-			this.$store.commit('mock/createCondition');
+			this.$store.dispatch('mock/createCondition');
 		}
 	},
 	methods: {
 		addCondition(){
-			this.$store.commit('mock/createCondition');
-		},
-		...mapMutations({
-			toggle: 'mock/add'
-		})
+			this.$store.dispatch('mock/createCondition');
+		}
 	}
 }
 </script>

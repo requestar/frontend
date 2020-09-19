@@ -24,7 +24,7 @@ export class Condition {
 
 export const conditions = []
 
-export const emptyCondition = {
+export const defaultCondition = {
 	name: 'new condition',// i18n
 	id: new Date().getTime(),
 	criteria: [{
@@ -35,4 +35,11 @@ export const emptyCondition = {
 		"value": ""
 	}],
 	pattern: "1"
+}
+
+export const defaultCriterium = {
+	"type": "header",
+	"key": "",
+	"check": "1",
+	"value": ""
 }
