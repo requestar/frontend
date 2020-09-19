@@ -2,40 +2,37 @@ import { defaultCondition, defaultCriterium } from "~/mock/condition/condition";
 
 const condition = {
 	createCondition({commit}) {
-		commit('createCondition', defaultCondition)
+		commit('createCondition', defaultCondition);
 	},
 
 	deleteCondition({commit, getters}, conditionId) {
-		const index = getters.conditionIndex(conditionId)
-		commit('deleteCondition', index)
+		const index = getters.conditionIndex(conditionId);
+		commit('deleteCondition', index);
 	}
 }
 
 const criteria = {
 	addDefaultCriterium({commit, getters}, { conditionId }) {
-		const conditionIndex = getters.conditionIndex(conditionId)
-		commit('createDefaultCriterium', {conditionIndex, criterium: defaultCriterium})
-		commit('addPattern', { conditionIndex, criteriumIndex: getters.conditions.length - 1 })
+		const conditionIndex = getters.conditionIndex(conditionId);
+		commit('pushCriterium', {conditionIndex, criterium: defaultCriterium});
+		commit('addPattern', { conditionIndex, criteriumIndex: getters.conditions.length - 1 });
 	},
 
-	addCriterium(state, { conditionId, previoudCriteriaId, criterium }) {
-		const conditionSet = state.conditions;
-		const index = conditionSet.findIndex(currentCondition => currentCondition.id === conditionId);
-		conditionSet[index].criteria.push(criterium)
+	addCriterium({commit, getters, dispatch}, { conditionId, previoudCriteriaId, criterium }) {
+		const conditionIndex = getters.conditionIndex(conditionId);
+		commit('pushCriterium', {conditionIndex, criterium});
+		dispatch('addCriteriaPattern');// TODO: to be corrected
 	},
 
-	updateCriterium(state, {conditionId, criterium}) {
-		const { id: criteriumId } = criterium
-		const conditionSet = state.conditions;
-		const conditionIndex = conditionSet.findIndex(currentCondition => currentCondition.id === conditionId);
-		const criteria = state.conditions[conditionIndex];
-		const criteriumIndex = criteria.findIndex(currentCriteria => currentCriteria.id === criteriumId);
-		const oldCriterium = criteria[criteriumIndex];
-		state.conditions[conditionIndex].criteria[criteriumIndex] = {... oldCriterium, ...criterium}
+	updateCriterium({commit, getters}, {conditionId, criterium}) {
+		const conditionIndex = getters.conditionIndex(conditionId);
+		commit('updateCriterium', { conditionIndex, criterium });
 	},
 
-	deleteCriterium(state, { conditionId, criteriumId }) {
-		
+	deleteCriterium({commit, getters}, { conditionId, criteriumId }) {
+		const conditionIndex = getters.conditionIndex(conditionId);
+		commit('deleteCriterium', { conditionIndex, criteriumId });
+		commit('deletePattern', { conditionIndex, criteriumId });
 	}
 }
 
@@ -50,8 +47,8 @@ const criteriaGroup = {
 }
 
 const pattern = {
-	addCriteriaPattern(){
-
+	addCriteriaPattern({commit, getters}, { conditionIndex, previoudCriteriaId, criteriumIndex }) {
+		commit('addPattern', { conditionIndex, previoudCriteriaId, criteriumIndex });// TODO: to be corrected
 	},
 
 	addCriteriaGroupPattern(){
