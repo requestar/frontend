@@ -1,13 +1,16 @@
 import { ArrayUtils } from "~/utilities/array-utilities";
 
 const condition = {
-	createCondition(state, condition) {
-		state.conditions.push(condition)
+	addCondition(state, { conditionIndex, condition }){
+		state.conditions = ArrayUtils.insertValue(state.conditions, conditionIndex, condition);
+	},
+
+	updateCondition(state, { conditionIndex, condition } ){
+		state.conditions[conditionIndex] = { ...state.conditions[conditionIndex], ...condition };
 	},
 
 	deleteCondition(state, index){
 		state.conditions = ArrayUtils.removeIndex(state.conditions, index);
-		// state.conditions = [...state.conditions.slice(0, index), ...state.conditions.slice(index+1)]
 	}
 }
 
@@ -25,14 +28,43 @@ const criteria = {
 	}
 }
 
+const criteriaGroup = {
+	pushCriteria(state, { conditionIndex, criteriaGroup }){
+
+	},
+
+
+}
+
 const pattern = {
-	addPattern(state, { conditionIndex, criteriumIndex }) {
-		state.conditions[conditionIndex].pattern = criteriumIndex.toString()
+	addCriteria(){
+
+	},
+
+	deleteCriteria(){
+
+	},
+
+	updateCriteriaOperator(){
+
+	},
+
+	addCriteriaGroup(){
+
+	},
+
+	deleteCriteriaGroup(){
+		
+	},
+
+	updateCriteriaGroupOperator(){
+
 	}
 }
 
 export default {
 	...condition,
 	...criteria,
-	...pattern
+	...criteriaGroup,
+	...pattern,
 }
