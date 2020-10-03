@@ -1,8 +1,13 @@
 export class ArrayUtils {
+	static insertValue(arr, value, index){
+		arr.splice(index, 0, value);
+		return arr;
+	}
+	
 	/** Removes the all occurance of the value
 	 * Use it when u want to delete non unique values
 	 */
-	removeMultipleValue(arr, value){
+	static removeMultipleValue(arr, value){
 		return arr.filter(function (ele) { 
 			return ele !== value; 
 		}); 
@@ -11,7 +16,7 @@ export class ArrayUtils {
 	/** Removes the first occurance of the value
 	 * Use it when u want to delete unique values
 	 */
-	removeValue(arr, value) {
+	static removeValue(arr, value) {
 		const index = arr.indexOf(5);
 		if (index > -1) {
 			arr.splice(index, 1);
@@ -19,7 +24,7 @@ export class ArrayUtils {
 		return arr;
 	}
 
-	removeIndex(arr, index){
+	static removeIndex(arr, index){
 		if (index > -1) {
 			arr.splice(index, 1);
 		}

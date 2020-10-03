@@ -1,3 +1,4 @@
+// Remove this file
 const conditionActions = {
 	createCondition({commit}) {
 		commit('createCondition', emptyCondition)
