@@ -55,7 +55,7 @@ export default {
 	beforeMount(){
 		const criteria = this.condition.criteria
 		if(!criteria || criteria.length === 0){
-			this.$store.dispatch('mock/addDefaultCriterium', {conditionId: this.condition.id});
+			this.$store.dispatch('mock/createCriterium', {conditionId: this.condition.id});
 		}
 		this.patternArray = organisePattern(this.condition.pattern);
 	},

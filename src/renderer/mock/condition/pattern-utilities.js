@@ -3,7 +3,9 @@ const newCriteriumId = 1212;
 const previousCriteriumId = 32;
 const isAND = false; */ 
 
-export class PattetnUtilities {
+// const pattern = "1212&(12|212&(112&32)|(1212|32))|121";
+const pattern = "1212&(12|212&(111)&(112&32)|(1212|32))|121";
+class PatternUtilities {
 	static breakPattern(pattern) {
 		const array = [];
 		const patternRegex = /(\d+|\s*[&|]\s*\d+|\s*[&|]\s*\(\s*\d+|\))\s*/g;
@@ -43,29 +45,45 @@ export class PattetnUtilities {
 	
 	static collectPattern(brokenPattern) {
 		return brokenPattern.reduce((collectedPatternString, currentPattern, i) => {
+			console.log(collectedPatternString);
+			console.log(currentPattern);
+			i === brokenPattern.length - 1 && console.log(pattern); 
+			currentPattern.value = currentPattern.type === 'criteriaGroup' && !currentPattern.value.startsWith("(") ? 
+				'(' + currentPattern.value + ')' : currentPattern.value;
 			return (i === 1 ? collectedPatternString.value : collectedPatternString) + 
 				(currentPattern.isAnd ? "&" : "|") + currentPattern.value;
 		});
 	}
 	
 	
-	static insertCriteria(pattern, previousCriteriumId, newCriteriumId, isAND) {
+	static insertCriteria(pattern, previousCriteriumId, criteria) {
 		const brokenPattern = this.breakPattern(pattern);
 		let i = 0;
 		while (i < brokenPattern.length) {
 			const currentCriteria = brokenPattern[i];
-			if (currentCriteria.value.includes(previousCriteriumId)) {
-				if (currentCriteria.type === 'criteria') {
-					currentCriteria.value = currentCriteria.value + (isAND ? "&" : "|") + newCriteriumId;
-				}
-				else {
-					currentCriteria.value = this.insertCriteria(currentCriteria.value, previousCriteriumId, 
-						newCriteriumId, isAND);
-				}
+			if(currentCriteria.type === 'criteria' && currentCriteria.value === previousCriteriumId.toString()){
+				const newCriteriaValue = (criteria.isAnd ? "&" : "|") + 
+						(criteria.type === 'criteriaGroup' ? "(" + criteria.value + ")" : criteria.value);
+				currentCriteria.value = currentCriteria.value +  newCriteriaValue;
+				break;
+			}
+			else if (currentCriteria.type === 'criteriaGroup' && currentCriteria.value.includes(previousCriteriumId)){
+				currentCriteria.value = this.insertCriteria(currentCriteria.value, previousCriteriumId, criteria);
 				break;
 			}
 			i++;
 		}
 		return this.collectPattern(brokenPattern);
 	}
+
+	static deleteCriteria(pattern, criteriaId, isCriteriaGroup){
+		const regexString = new RegExp( 
+			isCriteriaGroup ? '[&|]\\(' + criteriaId + '.*\\)' : '[&|]' + criteriaId + '(\\W)');
+		const replaceString = isCriteriaGroup ? "" : "$1";
+		return pattern.replace(regexString, replaceString);
+	}
 }
+
+// console.log(PatternUtilities.insertCriteria(pattern, '212', {type: 'criteriaGroup', value: '111', isAnd: true}));
+console.log(pattern);
+console.log(PatternUtilities.deleteCriteria(pattern, '111', true));
