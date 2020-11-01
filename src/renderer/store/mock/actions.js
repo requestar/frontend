@@ -1,14 +1,15 @@
-import { defaultCondition, defaultCriterium } from "~/mock/condition/condition";
+import { defaultCondition, defaultCriterium, defaultCriteriaGroup } from "~/mock/condition/condition";
+import { StringUtils } from "~/utilities/string-utilities";
 
 
-const conditionSet = {
+const conditionSetAction = {
 	initConditionSet({commit}){
 		commit('addCondition', { conditionIndex: 0, condition: defaultCondition });
 	}
 }
 
 
-const condition = {
+const conditionAction = {
 	createCondition({commit, getters}, { previoudConditionId }){
 		const conditionIndex = previoudConditionId ? getters.conditionIndex(previoudConditionId) : 
 			getters.conditions.length - 1 ;
@@ -31,11 +32,12 @@ const condition = {
 	}
 }
 
-const criteria = {
+const criteriaAction = {
 	createCriterium({commit, getters, dispatch}, { conditionId, previoudCriteriaId }) {
 		const conditionIndex = getters.conditionIndex(conditionId);
 		commit('pushCriterium', {conditionIndex, criterium: defaultCriterium});
-		dispatch('addCriteriaPattern', { conditionIndex, previoudCriteriaId, criteriumId: defaultCriterium.criteria.id, isAND: defaultCriterium.isAND });
+		dispatch('addCriteriaPattern', { conditionIndex, previoudCriteriaId, 
+			criteriumId: defaultCriterium.criteria.id, isAND: defaultCriterium.isAND });
 	},
 
 	addCriterium({commit, getters, dispatch}, { conditionId, previoudCriteriaId, criterium }) {
@@ -56,30 +58,42 @@ const criteria = {
 	}
 }
 
-const criteriaGroup = {
+const criteriaGroupAction = {
+	/**
+	 * previoudCriteriaId - if criterium group, send the first criteriumId
+	 */
 	createCriteriaGroup({commit, getters, dispatch}, { conditionId, previoudCriteriaId }) {
-
+		const conditionIndex = getters.conditionIndex(conditionId);
+		commit('pushCriterium', { conditionIndex, criterium: defaultCriteriaGroup.criteria });
+		dispatch('addCriteriaGroupPattern', { conditionIndex, previoudCriteriaId, 
+			criteriumId: defaultCriteriaGroup.criteria.id, isAND: defaultCriteriaGroup.isAND });
 	},
 	
 	addCriteriaGroup({commit, getters, dispatch}, { conditionId, previoudCriteriaId, criterium }) {
-
+		const conditionIndex = getters.conditionIndex(conditionId);
+		commit('pushCriterium', { conditionIndex, criterium: defaultCriteriaGroup.criteria });
+		dispatch('addCriteriaGroupPattern', { conditionIndex, previoudCriteriaId, 
+			criteriumId: defaultCriteriaGroup.criteria.id, isAND: defaultCriteriaGroup.isAND });
 	},
 
-	deleteCriteriaGroup() {
-
+	deleteCriteriaGroup({commit, getters, dispatch}, { conditionId, previoudCriteriaId, criterium }) {
+		const conditionIndex = getters.conditionIndex(conditionId);
 	}
 }
 
-const pattern = {
+const patternAction = {
+	updateOperator({commit, getters}, { conditionIndex, criteriumId, isAND, isCriteriaGroup }) {
+		let pattern = getters.conditionPattern(conditionIndex);
+		const indexToChange = getters.operatorIndex(criteriumId, isCriteriaGroup);
+		pattern = StringUtils.replaceAt(indexToChange, isAND ? '&' : '|')
+		commit('updatePattern', { conditionIndex, pattern });
+	},
+	
 	addCriteriaPattern({commit, getters}, { conditionIndex, previoudCriteriaId, criteriumId, isAND }) {
 		commit('addPattern', { conditionIndex, previoudCriteriaId, criteriumIndex });// TODO: to be corrected
 	},
 
 	addCriteriaGroupPattern(){
-
-	},
-
-	updateOperator({commit, getters}, { conditionIndex, criteriumId, isAND, isCriteriaGroup }) {
 
 	},
 
@@ -102,9 +116,9 @@ const pattern = {
 }
 
 export default {
-	...conditionSet,
-	...condition,
-	...criteria,
-	...criteriaGroup,
-	...pattern,
+	...conditionSetAction,
+	...conditionAction,
+	...criteriaAction,
+	...criteriaGroupAction,
+	...patternAction,
 }

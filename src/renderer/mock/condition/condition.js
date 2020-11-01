@@ -46,3 +46,14 @@ export const defaultCriterium = {
 		"value": ""
 	}
 }
+
+export const defaultCriteriaGroup = {
+	isAND: true,
+	criterium: {
+		"type": "header",
+		"key": "",
+		"check": "1",
+		"value": ""
+	},
+	pattern: "0"
+}
