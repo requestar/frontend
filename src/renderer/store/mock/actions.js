@@ -1,6 +1,6 @@
 import { defaultCondition, defaultCriterium, defaultCriteriaGroup } from "~/mock/condition/condition";
 import { StringUtils } from "~/utilities/string-utilities";
-
+import { PatternUtilities } from "~/mock/condition/pattern-utilities";
 
 const conditionSetAction = {
 	initConditionSet({commit}){
@@ -89,30 +89,39 @@ const patternAction = {
 		commit('updatePattern', { conditionIndex, pattern });
 	},
 	
-	addCriteriaPattern({commit, getters}, { conditionIndex, previoudCriteriaId, criteriumId, isAND }) {
-		commit('addPattern', { conditionIndex, previoudCriteriaId, criteriumIndex });// TODO: to be corrected
+	addCriteriaPattern({commit, getters}, { conditionIndex, previousCriteriumId, criteriumId, isAND }) {
+		const pattern = getters.conditionPattern(conditionIndex);
+		const criteria = {
+			isAND,
+			value: criteriumId,
+			type: 'criteria'
+		};
+		commit('updatePattern', { conditionIndex, 
+			pattern: PatternUtilities.insertCriteria(pattern, previousCriteriumId, criteria) });
 	},
 
-	addCriteriaGroupPattern(){
-
+	addCriteriaGroupPattern({commit, getters}, { conditionIndex, previousCriteriumId, criteriumId, isAND }) {
+		const pattern = getters.conditionPattern(conditionIndex);
+		const criteria = {
+			isAND,
+			value: criteriumId,
+			type: 'criteriaGroup'
+		};
+		commit('updatePattern', { conditionIndex, 
+			pattern: PatternUtilities.insertCriteria(pattern, previousCriteriumId, criteria) });
 	},
 
-	deleteCriteriumPattern(){
-
+	deleteCriteriumPattern({commit, getters}, { conditionIndex, criteriumId, isAND }) {
+		const pattern = getters.conditionPattern(conditionIndex);
+		commit('updatePattern', { conditionIndex, 
+			pattern: PatternUtilities.deleteCriteria(pattern, criteriumId, false) });
 	},
 	
-	deleteCriteriumGroupPattern(){
-
+	deleteCriteriumGroupPattern({commit, getters}, { conditionIndex, criteriumId, isAND }) {
+		const pattern = getters.conditionPattern(conditionIndex);
+		commit('updatePattern', { conditionIndex, 
+			pattern: PatternUtilities.deleteCriteria(pattern, criteriumId, true) });
 	}
-	/* addPatternCriteria(state, {conditionId, 
-			previousCriteriumIndex: previousCriteria, criteriumIndex : criterium, operator}){
-			const conditionSet = state.conditions;
-			const condition = conditionSet.filter(currentCondition => currentCondition.id === conditionId);
-			const pattern = condition.pattern;
-			const postition = pattern.indexOf(previousCriteria);
-			pattern.splice(postition, 0, 'operator'+criterium);
-			condition.pattern = pattern;
-		}, */
 }
 
 export default {

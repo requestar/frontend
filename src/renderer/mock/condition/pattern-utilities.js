@@ -3,7 +3,7 @@ const newCriteriumId = 1212;
 const previousCriteriumId = 32;
 const isAND = false; */
 const pattern = "1212&(12|212&(111)&(112&32)|(1212|32))|121";
-class PatternUtilities {
+export class PatternUtilities {
 	static breakPattern(pattern) {
 		const array = [];
 		const patternRegex = /(\d+|\s*[&|]\s*\d+|\s*[&|]\s*\(\s*\d+|\))\s*/g;
