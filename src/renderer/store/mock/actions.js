@@ -1,5 +1,5 @@
 import { defaultCondition, defaultCriterium, defaultCriteriaGroup } from "~/mock/condition/condition";
-import { StringUtils } from "~/utilities/string-utilities";
+import { StringUtilities } from "~/utilities/string-utilities";
 import { PatternUtilities } from "~/mock/condition/pattern-utilities";
 
 const conditionSetAction = {
@@ -54,7 +54,7 @@ const criteriaAction = {
 	deleteCriterium({commit, getters}, { conditionId, criteriumId }) {
 		const conditionIndex = getters.conditionIndex(conditionId);
 		commit('deleteCriterium', { conditionIndex, criteriumId });
-		commit('deletePattern', { conditionIndex, criteriumId });
+		commit('deleteCriteriumPattern', { conditionIndex, criteriumId });
 	}
 }
 
@@ -69,15 +69,21 @@ const criteriaGroupAction = {
 			criteriumId: defaultCriteriaGroup.criteria.id, isAND: defaultCriteriaGroup.isAND });
 	},
 	
-	addCriteriaGroup({commit, getters, dispatch}, { conditionId, previoudCriteriaId, criterium }) {
+	/* addCriteriaGroup({commit, getters, dispatch}, { conditionId, previoudCriteriaId, criteriaGroup }) {
 		const conditionIndex = getters.conditionIndex(conditionId);
 		commit('pushCriterium', { conditionIndex, criterium: defaultCriteriaGroup.criteria });
 		dispatch('addCriteriaGroupPattern', { conditionIndex, previoudCriteriaId, 
 			criteriumId: defaultCriteriaGroup.criteria.id, isAND: defaultCriteriaGroup.isAND });
-	},
+	}, */
 
-	deleteCriteriaGroup({commit, getters, dispatch}, { conditionId, previoudCriteriaId, criterium }) {
+	/**
+	 * criteriumId - first criteriumId of the group
+	 */
+	deleteCriteriaGroup({commit, getters, dispatch}, { conditionId, criteriumId }) {
 		const conditionIndex = getters.conditionIndex(conditionId);
+		const criteria = getters.groupCriteriumList(conditionIndex, criteriumId);
+		commit('deleteMultipleCriterium', { conditionIndex, criteria });
+		dispatch('deleteCriteriumGroupPattern', { conditionIndex, criteriumId });
 	}
 }
 
@@ -85,7 +91,7 @@ const patternAction = {
 	updateOperator({commit, getters}, { conditionIndex, criteriumId, isAND, isCriteriaGroup }) {
 		let pattern = getters.conditionPattern(conditionIndex);
 		const indexToChange = getters.operatorIndex(criteriumId, isCriteriaGroup);
-		pattern = StringUtils.replaceAt(indexToChange, isAND ? '&' : '|')
+		pattern = StringUtilities.replaceAt(indexToChange, isAND ? '&' : '|')
 		commit('updatePattern', { conditionIndex, pattern });
 	},
 	
@@ -111,13 +117,13 @@ const patternAction = {
 			pattern: PatternUtilities.insertCriteria(pattern, previousCriteriumId, criteria) });
 	},
 
-	deleteCriteriumPattern({commit, getters}, { conditionIndex, criteriumId, isAND }) {
+	deleteCriteriumPattern({commit, getters}, { conditionIndex, criteriumId }) {
 		const pattern = getters.conditionPattern(conditionIndex);
 		commit('updatePattern', { conditionIndex, 
 			pattern: PatternUtilities.deleteCriteria(pattern, criteriumId, false) });
 	},
 	
-	deleteCriteriumGroupPattern({commit, getters}, { conditionIndex, criteriumId, isAND }) {
+	deleteCriteriumGroupPattern({commit, getters}, { conditionIndex, criteriumId }) {
 		const pattern = getters.conditionPattern(conditionIndex);
 		commit('updatePattern', { conditionIndex, 
 			pattern: PatternUtilities.deleteCriteria(pattern, criteriumId, true) });
