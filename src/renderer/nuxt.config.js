@@ -4,7 +4,7 @@
  * @link {https://nuxtjs.org/guide/configuration/}
  */
 
-export const mode = 'spa'
+export const ssr= true
 export const head = {
 	title: 'frontend'
 }
