@@ -51,13 +51,14 @@ export default {
 	},
 	beforeMount() {
 		if(!this.conditionSet || this.conditionSet.length === 0){
-			this.$store.dispatch('mock/createCondition');
+			this.$store.dispatch('mock/initConditionSet');
 		}
 	},
+
 	methods: {
-		addCondition(){
-			this.$store.dispatch('mock/createCondition');
-		}
+		addCondition() {
+			this.$store.dispatch('mock/createCondition')
+		},
 	}
 }
 </script>

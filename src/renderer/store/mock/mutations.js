@@ -2,7 +2,8 @@ import { ArrayUtils } from "~/utilities/array-utilities";
 
 const condition = {
 	addCondition(state, { conditionIndex, condition }){
-		state.conditions = ArrayUtils.insertValue(state.conditions, conditionIndex, condition);
+		state.conditions = ArrayUtils.insertValue(state.conditions, condition, conditionIndex);
+		console.log(state.conditions)
 	},
 
 	updateCondition(state, { conditionIndex, condition } ){

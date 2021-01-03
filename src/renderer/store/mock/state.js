@@ -71,11 +71,6 @@ export default () => ({
 				value: ""
 			}
 		]
-	},
-	{
-		name: 'new condition',// i18n
-		id: new Date().getTime() + 6,
-		criteria: []
 	}
 	]
 })

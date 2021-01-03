@@ -1,9 +1,6 @@
 <template>
   <v-container fluid>
-    <v-card
-      class="mx-auto"
-      shaped
-    >
+    <v-card class="mx-auto" shaped>
       <v-toolbar dense dark>
         <v-card-title class="headline">
           {{ condition.name }}
@@ -36,35 +33,39 @@
 </template>
 <script>
 import Vue from 'vue'
-import criteria from '../condition/criteria';
-import criteriaGroup from '../condition/criteria-group';
+import criteria from '../condition/criteria'
+import criteriaGroup from '../condition/criteria-group'
 import { organisePattern } from '../../../mock/condition/check'
 
 export default {
 	props: {
 		currentCondition: {
 			type: Object,
-			required: true
-		}
+			required: true,
+		},
 	},
 	data() {
 		return {
-			condition: this.currentCondition
+			condition: this.currentCondition,
 		}
 	},
-	beforeMount(){
+	beforeMount() {
 		const criteria = this.condition.criteria
-		if(!criteria || criteria.length === 0){
-			this.$store.dispatch('mock/createCriterium', {conditionId: this.condition.id});
+		console.log('Criteria')
+		console.log(criteria)
+		if (!criteria || criteria.length === 0) {
+			this.$store.dispatch('mock/createCriterium', {
+				conditionId: this.condition.id,
+			})
 		}
-		this.patternArray = organisePattern(this.condition.pattern);
+		this.patternArray = organisePattern(this.condition.pattern)
 	},
-	mounted(){
-		const criteriaLevel = 1;
+	mounted() {
+		const criteriaLevel = 1
 		this.patternArray.forEach(pattern => {
-			if(pattern.type === "criteria"){
+			if (pattern.type === 'criteria') {
 				const ComponentClass = Vue.extend(criteria)
-				const criterium = this.condition.criteria[+pattern.value - 1];
+				const criterium = this.condition.criteria[+pattern.value - 1]
 				const instance = new ComponentClass({
 					store: this.$store,
 					propsData: {
@@ -72,13 +73,12 @@ export default {
 						criterium,
 						isAnd: pattern.isAnd,
 						isFirst: pattern.isFirst,
-						criteriaLevel
-					}
+						criteriaLevel,
+					},
 				})
 				instance.$mount()
 				this.$refs.criteria.appendChild(instance.$el)
-			}
-			else{
+			} else {
 				const ComponentClass = Vue.extend(criteriaGroup)
 				const instance = new ComponentClass({
 					store: this.$store,
@@ -88,8 +88,8 @@ export default {
 						pattern: pattern.value,
 						isAnd: pattern.isAnd,
 						isFirst: pattern.isFirst,
-						criteriaLevel
-					}
+						criteriaLevel,
+					},
 				})
 				instance.$mount()
 				this.$refs.criteria.appendChild(instance.$el)
@@ -107,14 +107,16 @@ export default {
 		this.$refs.criteria.appendChild(instance.$el) */
 	},
 	methods: {
-		deleteCondition(conditionId){
+		deleteCondition(conditionId) {
 			// destroy the vue listeners, etc
-			this.$destroy();
+			this.$destroy()
 
 			// remove the element from the DOM
-			this.$el.parentNode.removeChild(this.$el);
+			this.$el.parentNode.removeChild(this.$el)
 			this.$store.dispatch('mock/deleteCondition', conditionId)
+
+			console.log(this.$store.getters)
 		}
-	}
+	},
 }
 </script>
