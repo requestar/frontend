@@ -20,7 +20,16 @@ const criteria = {
 
 	criterium: state => (conditionId, criteriaId) => {
 
-	}
+	},
+
+	criteriumByPattern: (state, getters) => ({ conditionId, criteriumId }) => {
+		const criteria = state.conditions[getters.conditionIndex(conditionId)].criteria
+		for (const criterium of criteria) {
+			if (criterium.id === criteriumId) {
+				return criterium
+			}
+		}
+	},
 }
 
 const pattern = {

@@ -83,5 +83,5 @@ export class PatternUtilities {
 }
 
 // console.log(PatternUtilities.insertCriteria(pattern, '212', {type: 'criteriaGroup', value: '111', isAnd: true}));
-console.log(pattern);
-console.log(PatternUtilities.deleteCriteria(pattern, '111', true));
+// console.log(pattern);
+// console.log(PatternUtilities.deleteCriteria(pattern, '111', true));

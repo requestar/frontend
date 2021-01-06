@@ -24,17 +24,19 @@ export class Condition {
 
 export const conditions = []
 
-export const defaultCondition = {
-	name: 'new condition',// i18n
-	id: new Date().getTime(),
-	criteria: [{
-		"id": new Date().getTime(),
-		"type": "header",
-		"key": "",
-		"check": "1",
-		"value": ""
-	}],
-	pattern: new Date().getTime().toString()
+export function defaultCondition() {
+	return {
+		name: 'new condition',// i18n
+		id: new Date().getTime(),
+		criteria: [{
+			"id": new Date().getTime(),
+			"type": "header",
+			"key": "",
+			"check": "1",
+			"value": ""
+		}],
+		pattern: new Date().getTime().toString()
+	}
 }
 
 export const defaultCriterium = {

@@ -13,7 +13,7 @@ const conditionAction = {
 	createCondition({commit, getters}, previousConditionId){
 		const conditionIndex = previousConditionId ? getters.conditionIndex(previousConditionId) : 
 			getters.conditions.length;// next_index = conditions.length
-		commit('addCondition', { conditionIndex, condition: defaultCondition });
+		commit('addCondition', { conditionIndex, condition: defaultCondition() });
 	},
 
 	addCondition({commit, getters}, { previoudConditionId, condition }){

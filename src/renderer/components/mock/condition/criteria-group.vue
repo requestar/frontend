@@ -124,7 +124,10 @@ export default {
 		patternArray.forEach(pattern => {
 			if(pattern.type === "criteria"){
 				const ComponentClass = Vue.extend(criteria)
-				const criterium = this.criteria[+pattern.value - 1];
+				const criterium = this.$store.getters['mock/criteriumByPattern']({
+					conditionId: this.conditionId,
+					criteriumId: +pattern.value
+				})
 				const instance = new ComponentClass({
 					store: this.$store,
 					propsData: {

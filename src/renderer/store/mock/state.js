@@ -43,7 +43,8 @@ export default () => ({
 				response: new Date().getTime() + 5
 			}
 		],
-		pattern: "1&2&(3|4)|5",
+		pattern: (new Date().getTime() + 1) + "&" + (new Date().getTime() + 2) 
+			+ "&(" + (new Date().getTime() + 3) + "|" + (new Date().getTime() + 4) + ")|" + (new Date().getTime() + 5),
 		response: [
 			{
 				id: new Date().getTime() + 1,

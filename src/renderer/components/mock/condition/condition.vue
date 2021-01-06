@@ -51,8 +51,6 @@ export default {
 	},
 	beforeMount() {
 		const criteria = this.condition.criteria
-		console.log('Criteria')
-		console.log(criteria)
 		if (!criteria || criteria.length === 0) {
 			this.$store.dispatch('mock/createCriterium', {
 				conditionId: this.condition.id,
@@ -61,11 +59,16 @@ export default {
 		this.patternArray = organisePattern(this.condition.pattern)
 	},
 	mounted() {
+		console.log(this.condition)
 		const criteriaLevel = 1
 		this.patternArray.forEach(pattern => {
+			console.log(this.$store.getters)
 			if (pattern.type === 'criteria') {
 				const ComponentClass = Vue.extend(criteria)
-				const criterium = this.condition.criteria[+pattern.value - 1]
+				const criterium = this.$store.getters['mock/criteriumByPattern']({
+					conditionId: this.condition.id,
+					criteriumId: +pattern.value
+				})
 				const instance = new ComponentClass({
 					store: this.$store,
 					propsData: {
