@@ -7,15 +7,13 @@
 	- Response Visualisation
 	- Org, Project, Teams
 	- Folders and Sub Folders
-3. API Mocking
+3. **API Mocking**
 4. API Documentation
 	- Publishing in Custom Domain
 5. Sync to Private Repo(Self Hosted)
 6. Web and Cross Platform App
 		
 **Version** - 0.0.0
-
-[# reque.st.ar #](https://elan_chezhian94.bitbucket.io/)
 
 #### Build Setup
 # install dependencies
