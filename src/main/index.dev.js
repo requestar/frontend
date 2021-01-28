@@ -2,7 +2,8 @@ import fs from 'fs'
 import path from 'path'
 import { Menu, MenuItem, app } from 'electron'
 import electronDebug from 'electron-debug'
-import vueDevtools from 'vue-devtools'
+// import vueDevtools from 'vue-devtools'
+import installExtension, { VUEJS_DEVTOOLS } from "electron-devtools-installer";
 import { ELECTRON_RELAUNCH_CODE } from '../../.electron-nuxt/config'
 import mainWinHandler from './mainWindow'
 process.env.ELECTRON_DISABLE_SECURITY_WARNINGS = 'true'
@@ -35,11 +36,21 @@ app.on('ready', () => {
 	})
 	menu.append(refreshButton)
 	Menu.setApplicationMenu(menu)
-	vueDevtools.install()
 })
 
 mainWinHandler.onCreated(browserWindow => {
-	browserWindow.webContents.openDevTools()
+	if (process.env.NODE_ENV === 'development') {
+		// Open the DevTools.
+		installExtension(VUEJS_DEVTOOLS)
+			.then(name => {
+				console.log(`Added Extension:  ${name}`);
+				browserWindow.webContents.openDevTools("bottom");
+			})
+			.catch(err => console.log("An error occurred: ", err));
+
+		browserWindow.loadURL('http://localhost:9080');
+		return browserWindow;
+	}
 })
 
 // Require `main` process to boot app
