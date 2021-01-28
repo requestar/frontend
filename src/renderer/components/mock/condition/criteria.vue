@@ -65,12 +65,12 @@
               :color="currentCriteria.color"
               outlined
               v-on="on"
-              @click="deleteCriteria"
+              @click="deleteCriteria($store, conditionId, currentCriteria.id)"
             >
               <v-icon size="medium">mdi-minus</v-icon>
             </v-chip>
           </template>
-          <span>Delete Condition</span>
+          <span>Delete Criteria</span>
         </v-tooltip>
         <v-menu offset-y open-on-hover>
           <template v-slot:activator="{ on, attrs }">

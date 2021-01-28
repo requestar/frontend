@@ -22,10 +22,16 @@ const criteria = {
 
 	updateCriterium(state, { conditionIndex, criterium }){
 		const { id: criteriumId } = criterium
-		const criteria = state.conditions[conditionIndex];
+		const criteria = state.conditions[conditionIndex].criteria;
 		const criteriumIndex = criteria.findIndex(currentCriteria => currentCriteria.id === criteriumId);
 		const oldCriterium = criteria[criteriumIndex];
 		state.conditions[conditionIndex].criteria[criteriumIndex] = {... oldCriterium, ...criterium}
+	},
+
+	deleteCriterium(state, { conditionIndex, criteriumId }){
+		const criteria = state.conditions[conditionIndex].criteria
+		const criteriumIndex = criteria.findIndex(currentCriteria => currentCriteria.id === criteriumId)
+		state.conditions[conditionIndex].criteria = ArrayUtils.removeIndex(criteria, criteriumIndex)
 	}
 }
 

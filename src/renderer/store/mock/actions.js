@@ -55,10 +55,10 @@ const criteriaAction = {
 		commit('updateCriterium', { conditionIndex, criterium });
 	},
 
-	deleteCriterium({commit, getters}, { conditionId, criteriumId }) {
+	deleteCriterium({commit, getters, dispatch}, { conditionId, criteriumId }) {
 		const conditionIndex = getters.conditionIndex(conditionId);
 		commit('deleteCriterium', { conditionIndex, criteriumId });
-		commit('deleteCriteriumPattern', { conditionIndex, criteriumId });
+		dispatch('deleteCriteriumPattern', { conditionIndex, criteriumId });
 	}
 }
 

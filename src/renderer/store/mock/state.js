@@ -6,40 +6,40 @@ export default () => ({
 			{
 				id: new Date().getTime() + 1,
 				type: "header",
-				key: "key",
-				check: "check",
-				value: "value",
+				key: "",
+				check: "2",
+				value: "",
 				response: new Date().getTime() + 1
 			}, {
 				id: new Date().getTime() + 2,
 				type: "header",
-				key: "key",
-				check: "check",
-				value: "value",
+				key: "",
+				check: "1",
+				value: "",
 				response: new Date().getTime() + 2
 			},
 			{
 				id: new Date().getTime() + 3,
 				type: "header",
-				key: "key",
-				check: "check",
-				value: "value",
+				key: "",
+				check: "3",
+				value: "",
 				response: new Date().getTime() + 3
 			},
 			{
 				id: new Date().getTime() + 4,
 				type: "header",
-				key: "key",
-				check: "check",
-				value: "value",
+				key: "",
+				check: "1",
+				value: "",
 				response: new Date().getTime() + 4
 			},
 			{
 				id: new Date().getTime() + 5,
 				type: "header",
-				key: "key",
-				check: "check",
-				value: "value",
+				key: "",
+				check: "2",
+				value: "",
 				response: new Date().getTime() + 5
 			}
 		],
