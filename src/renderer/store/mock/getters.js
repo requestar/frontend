@@ -35,7 +35,11 @@ const criteria = {
 const pattern = {
 	pattern: (state, getters) => conditionId => {
 		return state.conditions[getters.conditionIndex(conditionId)].pattern
-	}
+	},
+
+	patternByConditionIndex: (state, getters) => conditionIndex => {
+		return state.conditions[conditionIndex].pattern
+	},
 }
 
 const response = {

@@ -94,7 +94,7 @@
                   :outlined="hover ? false : true"
                   raised
                   class="mr-10"
-                  @click="addCriteria(conditionId, 'header', criteriaLevel)"
+                  @click="addCriteria($store, conditionId, 'header', currentCriteria.id)"
                 >
                   <v-icon size="large">mdi-plus</v-icon>
                   Header(H)
@@ -110,7 +110,7 @@
                   :outlined="hover ? false : true"
                   raised
                   class="mr-10"
-                  @click="addCriteria(conditionId, 'param', criteriaLevel)"
+                  @click="addCriteria($store, conditionId, 'param', currentCriteria.id)"
                 >
                   <v-icon size="large">mdi-plus</v-icon>
                   Param(P)
@@ -125,7 +125,7 @@
                   :dark="hover ? true : false"
                   :outlined="hover ? false : true"
                   raised
-                  @click="addCriteria(conditionId, 'formBody', criteriaLevel)"
+                  @click="addCriteria($store, conditionId, 'formBody', currentCriteria.id)"
                 >
                   <v-icon size="large">mdi-plus</v-icon>
                   Form Body(FB)
@@ -151,7 +151,9 @@
           <span>Add Condition Group</span>
         </v-tooltip>
 
-        <responseEditor :response="response" :color="currentCriteria.color" @printResponse="printResponse(currentCriteria.response)" />
+        <responseEditor :response="response" :color="currentCriteria.color" 
+                        @printResponse="printResponse(currentCriteria.response)"
+        />
       </v-row>
     </v-col>
   </v-card>
@@ -159,12 +161,10 @@
 
 <script>
 import Vuetify from 'vuetify'
-import Vue from 'vue'
 import { mapMutations } from "vuex";
 
 import { defaultCriteriaConfig, conditionChecks } from '../../../mock/condition/check'
 import {addCriteria, deleteCriteria, addCriteriaGroup} from "./criteria-action"
-Vue.config.devtools = true;
 
 export default {
 	vuetify: new Vuetify(),
@@ -206,6 +206,11 @@ export default {
 			const response = conditions[index].response
 			return response && response[this.criterium.id]
 		}
+	},
+
+	mounted(){
+		console.log(this.currentCriteria.id)
+		console.log(this.$store)
 	},
 	methods: {
 		convertCondition() {

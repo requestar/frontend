@@ -2,8 +2,16 @@ import Vue from 'vue'
 
 import criteria from '../condition/criteria';
 import criteriaGroup from '../condition/criteria-group';
+import { defaultCriterium } from "../../../mock/condition/condition";
 
-export const addCriteria = function (conditionId, criteriaType, criteriaLevel) {
+export const addCriteria = function (_store, conditionId, criteriaType, previousCriteriumId) {
+	const criterium = defaultCriterium(conditionId, criteriaType)
+	_store.dispatch('mock/addCriterium', { conditionId, previousCriteriumId, criterium })
+}
+
+/* export const addCriteria = function (conditionId, criteriaType, criteriaLevel) {
+	const criterium = defaultCriterium()
+	
 	const criterium = {
 		id: new Date().getTime(),
 		type: criteriaType
@@ -21,7 +29,7 @@ export const addCriteria = function (conditionId, criteriaType, criteriaLevel) {
 	})
 	instance.$mount()
 	this.$el.parentNode.insertBefore(instance.$el, this.$el.nextSibling);
-}
+} */
 
 export const addCriteriaGroup = function (conditionId, isInnerGroup) {
 	const ComponentClass = Vue.extend(criteriaGroup)

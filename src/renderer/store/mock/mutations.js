@@ -38,6 +38,10 @@ const criteriaGroup = {
 }
 
 const pattern = {
+	updatePattern(state, { conditionIndex, pattern}) {
+		state.conditions[conditionIndex].pattern = pattern
+	},
+
 	addCriteria(){
 
 	},

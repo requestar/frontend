@@ -43,9 +43,6 @@ export class PatternUtilities {
 	
 	static collectPattern(brokenPattern) {
 		return brokenPattern.reduce((collectedPatternString, currentPattern, i) => {
-			console.log(collectedPatternString);
-			console.log(currentPattern);
-			i === brokenPattern.length - 1 && console.log(pattern); 
 			currentPattern.value = currentPattern.type === 'criteriaGroup' && !currentPattern.value.startsWith("(") ? 
 				'(' + currentPattern.value + ')' : currentPattern.value;
 			return (i === 1 ? collectedPatternString.value : collectedPatternString) + 

@@ -39,23 +39,28 @@ export function defaultCondition() {
 	}
 }
 
-export const defaultCriterium = {
-	isAND: true,
-	criteria: {
-		"type": "header",
-		"key": "",
-		"check": "1",
-		"value": ""
+export function defaultCriterium(criteriaType){
+	return {
+		isAND: true,
+		criteria: {
+			"id": new Date().getTime(),
+			"type": criteriaType || "header",
+			"key": "",
+			"check": "1",
+			"value": ""
+		}
 	}
 }
 
-export const defaultCriteriaGroup = {
-	isAND: true,
-	criterium: {
-		"type": "header",
-		"key": "",
-		"check": "1",
-		"value": ""
-	},
-	pattern: "0"
+export function defaultCriteriaGroup(){
+	return {
+		isAND: true,
+		criterium: {
+			"type": "header",
+			"key": "",
+			"check": "1",
+			"value": ""
+		},
+		pattern: "0"
+	}
 }
