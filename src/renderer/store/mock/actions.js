@@ -44,8 +44,9 @@ const criteriaAction = {
 	addCriterium({commit, getters, dispatch}, { conditionId, previousCriteriumId, criterium }) {
 		console.log(getters.conditions)
 		const conditionIndex = getters.conditionIndex(conditionId);
-		commit('pushCriterium', {conditionIndex, criterium});
-		dispatch('addCriteriaPattern', { conditionIndex, previousCriteriumId, criteriumId: criterium.id });
+		commit('pushCriterium', {conditionIndex, criterium: criterium.criteria});
+		dispatch('addCriteriaPattern', { conditionIndex, previousCriteriumId, 
+			criteriumId: criterium.criteria.id, isAND: criterium.isAND });
 		console.log(getters.conditions)
 	},
 

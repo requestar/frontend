@@ -5,7 +5,7 @@ import criteriaGroup from '../condition/criteria-group';
 import { defaultCriterium } from "../../../mock/condition/condition";
 
 export const addCriteria = function (_store, conditionId, criteriaType, previousCriteriumId) {
-	const criterium = defaultCriterium(conditionId, criteriaType)
+	const criterium = defaultCriterium(criteriaType)
 	_store.dispatch('mock/addCriterium', { conditionId, previousCriteriumId, criterium })
 }
 
