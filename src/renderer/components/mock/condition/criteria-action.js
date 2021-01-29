@@ -1,5 +1,5 @@
-import Vue from 'vue'
-import { defaultCriteriaGroup, defaultCriterium } from "../../../mock/condition/condition";
+import { defaultCriterium } from "../../../mock/condition/condition";
+import { defaultCriteriaConfig } from "../../../mock/condition/check";
 
 export const addCriteria = function (_store, conditionId, criteriaType, previousCriteriumId) {
 	const criterium = defaultCriterium(criteriaType)
@@ -12,6 +12,20 @@ export const deleteCriteria = function (_store, conditionId, criteriumId) {
 
 export const addCriteriaGroup = function (_store, conditionId, previousCriteriumId) {
 	_store.dispatch('mock/createCriteriaGroup', { conditionId, previousCriteriumId })
+}
+
+export const changeCriteriaOperator = function (_store, conditionId, criteriumId, isChangeToAndOperator) {
+	_store.dispatch('mock/updateOperator', { conditionId, criteriumId, 
+		isAND: isChangeToAndOperator, isCriteriaGroup: false })
+}
+
+export const changeCriteriaGroupOperator = function (_store, conditionId, firstCriteriumId, isChangeToAndOperator) {
+	_store.dispatch('mock/updateOperator', { conditionId, criteriumId: firstCriteriumId, 
+		isAND: isChangeToAndOperator, isCriteriaGroup: false })
+}
+
+export const changeCriteriaType = function (_store, conditionId, criteriumId, currentCriteriaType) {
+	const nextCriteriaType = defaultCriteriaConfig[currentCriteriaType].next
 }
 
 /* export const addCriteria = function (conditionId, criteriaType, criteriaLevel) {

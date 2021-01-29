@@ -1,5 +1,5 @@
 export class StringUtilities {
-	static replaceAt(index, replacement) {
-		return this.substr(0, index) + replacement + this.substr(index + replacement.length);
+	static replaceAt(originalString, index, replacement) {
+		return originalString.substr(0, index) + replacement + originalString.substr(index + replacement.length);
 	}
 }

@@ -47,8 +47,14 @@ const pattern = {
 		return state.conditions[getters.conditionIndex(conditionId)].pattern
 	},
 
-	patternByConditionIndex: (state, getters) => conditionIndex => {
+	patternByConditionIndex: state => conditionIndex => {
 		return state.conditions[conditionIndex].pattern
+	},
+
+	operatorIndex: state => (conditionIndex, criteriumId, isCriteriaGroup) => {
+		const pattern = state.conditions[conditionIndex].pattern
+		const criteriumStartIndex = pattern.indexOf(criteriumId)
+		return isCriteriaGroup ? criteriumStartIndex - 2 : criteriumStartIndex - 1;
 	},
 }
 

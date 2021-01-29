@@ -93,10 +93,11 @@ const criteriaGroupAction = {
 }
 
 const patternAction = {
-	updateOperator({commit, getters}, { conditionIndex, criteriumId, isAND, isCriteriaGroup }) {
+	updateOperator({commit, getters}, { conditionId, criteriumId, isAND, isCriteriaGroup }) {
+		const conditionIndex = getters.conditionIndex(conditionId);
 		let pattern = getters.patternByConditionIndex(conditionIndex);
-		const indexToChange = getters.operatorIndex(criteriumId, isCriteriaGroup);
-		pattern = StringUtilities.replaceAt(indexToChange, isAND ? '&' : '|')
+		const indexToChange = getters.operatorIndex(conditionIndex, criteriumId, isCriteriaGroup);
+		pattern = StringUtilities.replaceAt(pattern, indexToChange, isAND ? '&' : '|')
 		commit('updatePattern', { conditionIndex, pattern });
 	},
 	

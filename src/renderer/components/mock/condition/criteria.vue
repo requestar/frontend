@@ -12,7 +12,7 @@
         :color="currentCriteria.color"
         outlined
         large
-        @click="isAnd = !isAnd"
+        @click="changeCriteriaOperator($store, conditionId, currentCriteria.id, !isAnd)"
       >
         {{ isAnd ? '&&' : '||' }}
       </v-chip>
@@ -21,7 +21,7 @@
         :color="currentCriteria.color"
         outlined
         large
-        @click="convertCondition(currentCriteria.type)"
+        @click="changeCriteriaType($store, conditionId, currentCriteria.id, currentCriteria.type)"
       >
         {{ currentCriteria.shortText.toUpperCase() }}
       </v-chip>
@@ -164,7 +164,8 @@ import Vuetify from 'vuetify'
 import { mapMutations } from "vuex";
 
 import { defaultCriteriaConfig, conditionChecks } from '../../../mock/condition/check'
-import {addCriteria, deleteCriteria, addCriteriaGroup} from "./criteria-action"
+import {addCriteria, deleteCriteria, addCriteriaGroup, 
+	changeCriteriaOperator, changeCriteriaType } from "./criteria-action"
 
 export default {
 	vuetify: new Vuetify(),
@@ -212,16 +213,8 @@ export default {
 		console.log(this.currentCriteria.id)
 		console.log(this.$store)
 	},
-	methods: {
-		convertCondition() {
-			const nextCriteriaType = this.currentCriteria.next
-			this.currentCriteria = {...this.currentCriteria, 
-				...defaultCriteriaConfig[nextCriteriaType], 
-				...{'type': nextCriteriaType}
-			}
-		},
-    
-		addCriteria, deleteCriteria, addCriteriaGroup,
+	methods: {    
+		addCriteria, deleteCriteria, addCriteriaGroup, changeCriteriaOperator, changeCriteriaType,
     
 		printResponse(e){
 			console.log(this.currentCriteria.response);

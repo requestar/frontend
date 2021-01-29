@@ -17,7 +17,7 @@ export class ArrayUtils {
 	 * Use it when u want to delete unique values
 	 */
 	static removeValue(arr, value) {
-		const index = arr.indexOf(5);
+		const index = arr.indexOf(value);
 		if (index > -1) {
 			arr.splice(index, 1);
 		}
