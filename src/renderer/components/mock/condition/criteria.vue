@@ -143,7 +143,7 @@
               :color="currentCriteria.color"
               outlined
               v-on="on"
-              @click="addCriteriaGroup"
+              @click="addCriteriaGroup($store, conditionId, currentCriteria.id)"
             >
               <i class="fa fa-object-group" aria-hidden="true" />
             </v-chip>

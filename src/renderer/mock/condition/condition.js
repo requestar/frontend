@@ -55,12 +55,13 @@ export function defaultCriterium(criteriaType){
 export function defaultCriteriaGroup(){
 	return {
 		isAND: true,
-		criterium: {
+		criteria: {
+			"id": new Date().getTime(),
 			"type": "header",
 			"key": "",
 			"check": "1",
 			"value": ""
 		},
-		pattern: "0"
+		pattern: "" + new Date().getTime()
 	}
 }

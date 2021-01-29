@@ -1,7 +1,5 @@
 import Vue from 'vue'
-
-import criteriaGroup from '../condition/criteria-group';
-import { defaultCriterium } from "../../../mock/condition/condition";
+import { defaultCriteriaGroup, defaultCriterium } from "../../../mock/condition/condition";
 
 export const addCriteria = function (_store, conditionId, criteriaType, previousCriteriumId) {
 	const criterium = defaultCriterium(criteriaType)
@@ -10,6 +8,10 @@ export const addCriteria = function (_store, conditionId, criteriaType, previous
 
 export const deleteCriteria = function (_store, conditionId, criteriumId) {
 	_store.dispatch('mock/deleteCriterium', { conditionId, criteriumId })
+}
+
+export const addCriteriaGroup = function (_store, conditionId, previousCriteriumId) {
+	_store.dispatch('mock/createCriteriaGroup', { conditionId, previousCriteriumId })
 }
 
 /* export const addCriteria = function (conditionId, criteriaType, criteriaLevel) {
@@ -34,7 +36,7 @@ export const deleteCriteria = function (_store, conditionId, criteriumId) {
 	this.$el.parentNode.insertBefore(instance.$el, this.$el.nextSibling);
 } */
 
-export const addCriteriaGroup = function (conditionId, isInnerGroup) {
+/* export const addCriteriaGroup = function (conditionId, isInnerGroup) {
 	const ComponentClass = Vue.extend(criteriaGroup)
 	const instance = new ComponentClass({
 		propsData: {
@@ -49,7 +51,7 @@ export const addCriteriaGroup = function (conditionId, isInnerGroup) {
 	})
 	instance.$mount()
 	this.$el.parentNode.insertBefore(instance.$el, this.$el.nextSibling);
-}
+} */
 
 /* export const deleteCriteria = function () {
 	this.$destroy();
