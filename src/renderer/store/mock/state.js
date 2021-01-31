@@ -1,7 +1,8 @@
 export default () => ({
 	conditions: [{
-		name: 'new condition',// i18n
-		id: new Date().getTime(),
+		name: 'new condition',
+		id: new Date().getTime() + 10,
+		updatedTime: new Date().getTime(),
 		criteria: [
 			{
 				id: new Date().getTime() + 1,
@@ -10,7 +11,8 @@ export default () => ({
 				check: "2",
 				value: "",
 				response: new Date().getTime() + 1
-			}, {
+			}, 
+			{
 				id: new Date().getTime() + 2,
 				type: "header",
 				key: "",

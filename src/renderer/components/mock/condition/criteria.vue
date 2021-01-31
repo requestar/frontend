@@ -21,7 +21,7 @@
         :color="currentCriteria.color"
         outlined
         large
-        @click="changeCriteriaType($store, conditionId, currentCriteria.id, currentCriteria.type)"
+        @click="changeCriteriaType($store, conditionId, currentCriteria)"
       >
         {{ currentCriteria.shortText.toUpperCase() }}
       </v-chip>

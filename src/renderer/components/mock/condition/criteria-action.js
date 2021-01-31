@@ -24,8 +24,10 @@ export const changeCriteriaGroupOperator = function (_store, conditionId, firstC
 		isAND: isChangeToAndOperator, isCriteriaGroup: false })
 }
 
-export const changeCriteriaType = function (_store, conditionId, criteriumId, currentCriteriaType) {
-	const nextCriteriaType = defaultCriteriaConfig[currentCriteriaType].next
+export const changeCriteriaType = function (_store, conditionId, currentCriterium) {
+	const nextCriteriaType = defaultCriteriaConfig[currentCriterium.type].next
+	_store.dispatch('mock/updateCriterium', { conditionId, 
+		criterium: { ...currentCriterium , ...{type: nextCriteriaType}} })
 }
 
 /* export const addCriteria = function (conditionId, criteriaType, criteriaLevel) {

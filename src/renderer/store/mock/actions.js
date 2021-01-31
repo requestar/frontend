@@ -24,6 +24,7 @@ const conditionAction = {
 	updateCondition({commit, getters}, {conditionId, condition}) {
 		const conditionIndex = getters.conditionIndex(conditionId);
 		commit('updateCondition', { conditionIndex, condition });
+		commit('updateConditionUpdatedTime', { conditionIndex });
 	},
 
 	deleteCondition({commit, getters}, { conditionId }){
@@ -39,6 +40,7 @@ const criteriaAction = {
 		commit('pushCriterium', {conditionIndex, criterium});
 		dispatch('addCriteriaPattern', { conditionIndex, previousCriteriumId, 
 			criteriumId: criterium.criteria.id, isAND: criterium.isAND });
+		commit('updateConditionUpdatedTime', { conditionIndex });
 	},
 
 	addCriterium({commit, getters, dispatch}, { conditionId, previousCriteriumId, criterium }) {
@@ -47,18 +49,21 @@ const criteriaAction = {
 		commit('pushCriterium', {conditionIndex, criterium: criterium.criteria});
 		dispatch('addCriteriaPattern', { conditionIndex, previousCriteriumId, 
 			criteriumId: criterium.criteria.id, isAND: criterium.isAND });
-		console.log(getters.conditions)
+		commit('updateConditionUpdatedTime', { conditionIndex });
 	},
 
-	updateCriterium({commit, getters}, {conditionId, criterium}) {
+	updateCriterium({commit, getters}, {conditionId, criterium }) {
+		const { type, id, check, value, response } = criterium
 		const conditionIndex = getters.conditionIndex(conditionId);
-		commit('updateCriterium', { conditionIndex, criterium });
+		commit('updateCriterium', { conditionIndex, criterium: { type, id, check, value, response } });
+		commit('updateConditionUpdatedTime', { conditionIndex });
 	},
 
 	deleteCriterium({commit, getters, dispatch}, { conditionId, criteriumId }) {
 		const conditionIndex = getters.conditionIndex(conditionId);
 		commit('deleteCriterium', { conditionIndex, criteriumId });
 		dispatch('deleteCriteriumPattern', { conditionIndex, criteriumId });
+		commit('updateConditionUpdatedTime', { conditionIndex });
 	}
 }
 
@@ -72,6 +77,7 @@ const criteriaGroupAction = {
 		commit('pushCriterium', { conditionIndex, criterium: criteriaGroup.criteria });
 		dispatch('addCriteriaGroupPattern', { conditionIndex, previousCriteriumId, 
 			criteriumId: criteriaGroup.criteria.id, isAND: criteriaGroup.isAND });
+		commit('updateConditionUpdatedTime', { conditionIndex });
 	},
 	
 	/* addCriteriaGroup({commit, getters, dispatch}, { conditionId, previousCriteriumId, criteriaGroup }) {
@@ -89,6 +95,7 @@ const criteriaGroupAction = {
 		const criteria = getters.groupCriteriumList(conditionIndex, criteriumId);
 		commit('deleteMultipleCriterium', { conditionIndex, criteria });
 		dispatch('deleteCriteriumGroupPattern', { conditionIndex, criteriumId });
+		commit('updateConditionUpdatedTime', { conditionIndex });
 	}
 }
 
@@ -99,6 +106,7 @@ const patternAction = {
 		const indexToChange = getters.operatorIndex(conditionIndex, criteriumId, isCriteriaGroup);
 		pattern = StringUtilities.replaceAt(pattern, indexToChange, isAND ? '&' : '|')
 		commit('updatePattern', { conditionIndex, pattern });
+		commit('updateConditionUpdatedTime', { conditionIndex });
 	},
 	
 	addCriteriaPattern({commit, getters}, { conditionIndex, previousCriteriumId, criteriumId, isAND }) {
@@ -110,6 +118,7 @@ const patternAction = {
 		};
 		commit('updatePattern', { conditionIndex, 
 			pattern: PatternUtilities.insertCriteria(pattern, previousCriteriumId, criteria) });
+		commit('updateConditionUpdatedTime', { conditionIndex });
 	},
 
 	addCriteriaGroupPattern({commit, getters}, { conditionIndex, previousCriteriumId, criteriumId, isAND }) {
@@ -121,19 +130,21 @@ const patternAction = {
 		};
 		commit('updatePattern', { conditionIndex, 
 			pattern: PatternUtilities.insertCriteria(pattern, previousCriteriumId, criteria) });
-		console.log(getters.conditions)
+		commit('updateConditionUpdatedTime', { conditionIndex });
 	},
 
 	deleteCriteriumPattern({commit, getters}, { conditionIndex, criteriumId }) {
 		const pattern = getters.patternByConditionIndex(conditionIndex);
 		commit('updatePattern', { conditionIndex, 
 			pattern: PatternUtilities.deleteCriteria(pattern, criteriumId, false) });
+		commit('updateConditionUpdatedTime', { conditionIndex });
 	},
 	
 	deleteCriteriumGroupPattern({commit, getters}, { conditionIndex, criteriumId }) {
 		const pattern = getters.patternByConditionIndex(conditionIndex);
 		commit('updatePattern', { conditionIndex, 
 			pattern: PatternUtilities.deleteCriteria(pattern, criteriumId, true) });
+		commit('updateConditionUpdatedTime', { conditionIndex });
 	}
 }
 

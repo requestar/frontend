@@ -30,8 +30,8 @@
         </v-tooltip>
       </v-toolbar>
       <div class="condition-set">
-        <condition v-for="condition in conditionSet" :key="condition.id-condition.pattern" 
-                   :current-condition="condition"
+        <condition v-for="condition in conditionSet"
+                   :key="condition.id+'-'+condition.updatedTime" :current-condition="condition"
         />
       </div>
     </v-card>

@@ -10,6 +10,10 @@ const condition = {
 		state.conditions[conditionIndex] = { ...state.conditions[conditionIndex], ...condition };
 	},
 
+	updateConditionUpdatedTime(state, { conditionIndex } ){
+		state.conditions[conditionIndex].updatedTime = new Date().getTime();
+	},
+
 	deleteCondition(state, index){
 		state.conditions = ArrayUtils.removeIndex(state.conditions, index);
 	}
