@@ -59,10 +59,8 @@ export default {
 		this.patternArray = organisePattern(this.condition.pattern)
 	},
 	mounted() {
-		console.log(this.condition)
 		const criteriaLevel = 1
 		this.patternArray.forEach(pattern => {
-			console.log(this.$store.getters)
 			if (pattern.type === 'criteria') {
 				const ComponentClass = Vue.extend(criteria)
 				const criterium = this.$store.getters['mock/criteriumByPattern']({
@@ -117,8 +115,6 @@ export default {
 			// remove the element from the DOM
 			this.$el.parentNode.removeChild(this.$el)
 			this.$store.dispatch('mock/deleteCondition', conditionId)
-
-			console.log(this.$store.getters)
 		}
 	},
 }

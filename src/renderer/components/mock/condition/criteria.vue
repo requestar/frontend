@@ -208,11 +208,6 @@ export default {
 			return response && response[this.criterium.id]
 		}
 	},
-
-	mounted(){
-		console.log(this.currentCriteria.id)
-		console.log(this.$store)
-	},
 	methods: {    
 		addCriteria, deleteCriteria, addCriteriaGroup, changeCriteriaOperator, changeCriteriaType,
     

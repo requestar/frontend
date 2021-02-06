@@ -30,4 +30,8 @@ export class ArrayUtils {
 		}
 		return arr;
 	}
+
+	static getSpecificObject(arr, keyName, value){
+		return arr.find(object => object[keyName] === value);
+	}
 }

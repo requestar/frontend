@@ -6,7 +6,7 @@
       color="blue"
       outlined
       large
-      @click="isAnd = !isAnd"
+      @click="changeCriteriaGroupOperator($store, conditionId, firstCriteria.id, !isAnd)"
     >
       {{ isAnd ? '&&' : '||' }}
     </v-chip>
@@ -83,6 +83,8 @@ import criteria from '../condition/criteria';
 import criteriaGroup from '../condition/criteria-group';
 
 import { organisePattern } from '../../../mock/condition/check'
+import { ArrayUtils } from "../../../utilities/array-utilities"
+import { PatternUtilities } from "../../../mock/condition/pattern-utilities"
 import { addCriteria, deleteCriteria, addCriteriaGroup } from "./criteria-action"
 
 export default {
@@ -120,7 +122,7 @@ export default {
 	},
 	mounted(){
 		const patternArray = organisePattern(this.pattern);
-		console.log(patternArray)
+		this.firstCriteria = getFirstCriteria(this.criteria, this.pattern)
 		patternArray.forEach(pattern => {
 			if(pattern.type === "criteria"){
 				const ComponentClass = Vue.extend(criteria)
@@ -172,6 +174,12 @@ export default {
 	methods: {
 		// addCriteria, deleteCriteria, addCriteriaGroup, convertOperator - this is not working
 	}
+}
+
+function getFirstCriteria(criteriaArray, pattern){
+	const brokenPattern = PatternUtilities.breakPattern(pattern)
+	// console.log(ArrayUtils.getSpecificObject(criteriaArray, "id", brokenPattern[0].value))
+	return ArrayUtils.getSpecificObject(criteriaArray, "id", +brokenPattern[0].value)
 }
 </script>
 <style scoped>
