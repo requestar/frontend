@@ -6,7 +6,7 @@
       color="blue"
       outlined
       large
-      @click="changeCriteriaGroupOperator($store, conditionId, firstCriteria.id, !isAnd)"
+      @click="changeCriteriaGroupOperator($store, conditionId, firstCriterium.id, !isAnd)"
     >
       {{ isAnd ? '&&' : '||' }}
     </v-chip>
@@ -31,7 +31,7 @@
                   v-bind="attrs"
                   color="blue"
                   v-on="on"
-                  @click="deleteCriteria"
+                  @click="deleteCriteriaGroup"
                 >
                   <v-icon size="medium">mdi-minus</v-icon>
                 </v-chip>
@@ -85,7 +85,7 @@ import criteriaGroup from '../condition/criteria-group';
 import { organisePattern } from '../../../mock/condition/check'
 import { ArrayUtils } from "../../../utilities/array-utilities"
 import { PatternUtilities } from "../../../mock/condition/pattern-utilities"
-import { addCriteria, deleteCriteria, addCriteriaGroup } from "./criteria-action"
+import { addCriteria, deleteCriteria, addCriteriaGroup, changeCriteriaGroupOperator } from "./criteria-action"
 
 export default {
 	vuetify: new Vuetify(),
@@ -119,10 +119,11 @@ export default {
 		this.addCriteria = addCriteria.bind(this)
 		this.deleteCriteria = deleteCriteria.bind(this)
 		this.addCriteriaGroup = addCriteriaGroup.bind(this)
+		this.changeCriteriaGroupOperator = changeCriteriaGroupOperator.bind(this)
 	},
 	mounted(){
 		const patternArray = organisePattern(this.pattern);
-		this.firstCriteria = getFirstCriteria(this.criteria, this.pattern)
+		this.firstCriterium = getFirstCriteria(this.criteria, this.pattern)
 		patternArray.forEach(pattern => {
 			if(pattern.type === "criteria"){
 				const ComponentClass = Vue.extend(criteria)

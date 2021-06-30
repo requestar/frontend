@@ -1,0 +1,62 @@
+const conditionSet = [
+	{
+	name: 'new condition',
+	id: new Date().getTime(),
+	criteria: [
+			{
+				"id": new Date().getTime() + 1,
+				"type": "header",
+				"key": "key",
+				"check": "check",
+				"value": "value"
+			},
+			{
+				"id": new Date().getTime() + 2,
+				"type": "header",
+				"key": "key",
+				"check": "check",
+				"value": "value"
+			}
+		],
+	pattern: "1&2&(3|4)|5"
+	},
+	{
+	name: 'new condition 2',
+	id: new Date().getTime() + 3,
+	criteria: [
+			{
+				"id": new Date().getTime() + 4,
+				"type": "header",
+				"key": "key",
+				"check": "check",
+				"value": "value"
+			},
+			{
+				"id": new Date().getTime() + 5,
+				"type": "header",
+				"key": "key",
+				"check": "check",
+				"value": "value"
+			}
+		],
+	pattern: "1&2&(3|4)|5"
+	}
+];
+
+
+const initCSet = [
+	{
+	name: 'new condition',
+	id: new Date().getTime(),
+	criteria: [
+			{
+				"id": new Date().getTime() + 1,
+				"type": "header",
+				"key": "key",
+				"check": "check",
+				"value": "value"
+			}
+		],
+	pattern: "112112212"
+	}
+]

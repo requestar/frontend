@@ -1,0 +1,51 @@
+{
+    "urls" : {
+        "api": {
+            "v1": {
+                "teams": {
+                    "ppgne54e1e98d90cc4c37812ff8bbc4987b87": {
+                        "id": "121212"
+                    },
+                    "*": {
+                        "id": "121212",
+                        "conditions": [
+                            {
+                                "name": "new",
+                                "criteria": [{
+                                    "type": "header",
+                                    "key": "key",
+                                    "check": "check",
+                                    "value": "value"
+                                }, {
+                                    "type": "header",
+                                    "key": "key",
+                                    "check": "check",
+                                    "value": "value"
+                                }],
+                                "pattern": "1 || 2 && (3 || 4) || 5"
+                            }
+                        ]
+                    }
+                }
+            }
+        }
+    }
+}
+
+["&&", 1, 2]
+
+("||", 1, 2)
+1 || 2 && (3 || 4) || 5
+
+"pattern": [
+    "&&",
+    {
+        "type": "header",
+        "key": "key",
+        "check": "check",
+        "value": "value"
+    },
+    [
+
+    ]
+]

@@ -21,7 +21,7 @@ export const changeCriteriaOperator = function (_store, conditionId, criteriumId
 
 export const changeCriteriaGroupOperator = function (_store, conditionId, firstCriteriumId, isChangeToAndOperator) {
 	_store.dispatch('mock/updateOperator', { conditionId, criteriumId: firstCriteriumId, 
-		isAND: isChangeToAndOperator, isCriteriaGroup: false })
+		isAND: isChangeToAndOperator, isCriteriaGroup: true })
 }
 
 export const changeCriteriaType = function (_store, conditionId, currentCriterium) {
